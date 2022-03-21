@@ -1,0 +1,41 @@
+.big-header {
+    font-size: 10rem;
+    /* text-align: center; */
+    /* font-family: Lato; */
+    /* position: relative; */
+    text-shadow: 6px 6px 9px rgba(120, 120, 120, 0.2);
+
+    /*   https://www.joshwcomeau.com/gradient-generator?colors=ed4b25|336597&angle=150&colorMode=hsv&precision=20&easingCurve=0.333|1|0.666|0 */
+    background-image: linear-gradient(
+        150deg,
+        hsl(11deg 85% 54%) 0%,
+        hsl(4deg 83% 53%) 13%,
+        hsl(356deg 81% 52%) 19%,
+        hsl(348deg 80% 52%) 24%,
+        hsl(341deg 78% 51%) 28%,
+        hsl(333deg 76% 50%) 32%,
+        hsl(325deg 75% 50%) 35%,
+        hsl(317deg 73% 49%) 39%,
+        hsl(310deg 72% 48%) 42%,
+        hsl(302deg 70% 48%) 45%,
+        hsl(294deg 68% 47%) 48%,
+        hsl(287deg 66% 46%) 52%,
+        hsl(279deg 65% 46%) 55%,
+        hsl(271deg 63% 45%) 58%,
+        hsl(264deg 61% 44%) 61%,
+        hsl(256deg 60% 44%) 65%,
+        hsl(249deg 58% 43%) 68%,
+        hsl(241deg 56% 42%) 72%,
+        hsl(233deg 55% 42%) 76%,
+        hsl(225deg 53% 41%) 81%,
+        hsl(218deg 51% 40%) 87%,
+        hsl(210deg 50% 40%) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-logo {
+    max-height: 3em;
+    aspect-ratio: 150 / 143;
+}
