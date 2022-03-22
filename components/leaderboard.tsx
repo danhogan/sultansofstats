@@ -43,7 +43,25 @@ interface Data {
     QS: number;
 }
 
-const rows = jsonData.theData;
+const regularRows: any = jsonData.theData;
+//making things happy with this trashy "flattening"
+const rows = regularRows.map((row: any) => {
+    return {
+        ...row,
+        HR: row.stats.HR,
+        R: row.stats.R,
+        RBI: row.stats.RBI,
+        SB: row.stats.SB,
+        OBP: row.stats.OBP,
+        OPS: row.stats.OPS,
+        SO: row.stats.SO,
+        SV: row.stats.SV,
+        HD: row.stats.HD,
+        ERA: row.stats.ERA,
+        WHP: row.stats.WHP,
+        QS: row.stats.QS,
+    };
+});
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -294,14 +312,15 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.teamName);
+            const newSelecteds = rows.map((n: { teamName: any }) => n.teamName);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    const handleClick = (event: React.MouseEvent<unknown>, name: any) => {
+        //"any" was and I guess should be "string"
         const selectedIndex = selected.indexOf(name);
         let newSelected: readonly string[] = [];
 
@@ -331,7 +350,7 @@ export default function EnhancedTable() {
         setDense(event.target.checked);
     };
 
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const isSelected = (name: any) => selected.indexOf(name) !== -1; //"any" was and I guess should be "string"
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -386,18 +405,18 @@ export default function EnhancedTable() {
                                             <TableCell align="right">{row.overallRank}</TableCell>
                                             <TableCell align="right">{row.totalPoints}</TableCell>
 
-                                            <TableCell align="right">{row.stats.HR}</TableCell>
-                                            <TableCell align="right">{row.stats.R}</TableCell>
-                                            <TableCell align="right">{row.stats.RBI}</TableCell>
-                                            <TableCell align="right">{row.stats.SB}</TableCell>
-                                            <TableCell align="right">{row.stats.OBP}</TableCell>
-                                            <TableCell align="right">{row.stats.OPS}</TableCell>
-                                            <TableCell align="right">{row.stats.SO}</TableCell>
-                                            <TableCell align="right">{row.stats.SV}</TableCell>
-                                            <TableCell align="right">{row.stats.HD}</TableCell>
-                                            <TableCell align="right">{row.stats.ERA}</TableCell>
-                                            <TableCell align="right">{row.stats.WHP}</TableCell>
-                                            <TableCell align="right">{row.stats.QS}</TableCell>
+                                            <TableCell align="right">{row.HR}</TableCell>
+                                            <TableCell align="right">{row.R}</TableCell>
+                                            <TableCell align="right">{row.RBI}</TableCell>
+                                            <TableCell align="right">{row.SB}</TableCell>
+                                            <TableCell align="right">{row.OBP}</TableCell>
+                                            <TableCell align="right">{row.OPS}</TableCell>
+                                            <TableCell align="right">{row.SO}</TableCell>
+                                            <TableCell align="right">{row.SV}</TableCell>
+                                            <TableCell align="right">{row.HD}</TableCell>
+                                            <TableCell align="right">{row.ERA}</TableCell>
+                                            <TableCell align="right">{row.WHP}</TableCell>
+                                            <TableCell align="right">{row.QS}</TableCell>
                                         </TableRow>
                                     );
                                 })}
