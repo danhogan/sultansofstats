@@ -12,7 +12,7 @@ import Layout from "../components/layout";
 
 const Leaderboard: NextPage = () => {
     return (
-        <Container maxWidth="bigboi">
+        <Container maxWidth="bigboi" className="board-container">
             <LeaderboardComponent></LeaderboardComponent>
         </Container>
     );

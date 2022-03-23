@@ -39,3 +39,11 @@
     max-height: 3em;
     aspect-ratio: 150 / 143;
 }
+
+.board-container {
+    margin-top: 1em;
+}
+
+.css-d5rns7-MuiTableCell-root {
+    padding: 6px;
+}

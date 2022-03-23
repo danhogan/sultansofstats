@@ -39,7 +39,7 @@ const Header = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link href="/" className="main-logo" sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+                    <Link href="/" className="main-logo" sx={{ mr: 2, display: { xs: "none", md: "flex" }, textDecoration: "none" }}>
                         <img src="/images/sos.jpg"></img>
                     </Link>
 
@@ -92,7 +92,7 @@ const Header = () => {
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages.map((page) => (
                             <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                                <Link href={"/" + page.toLowerCase()} sx={{ color: "white" }}>
+                                <Link href={"/" + page.toLowerCase()} sx={{ color: "white", textDecoration: "none" }}>
                                     {page}
                                 </Link>
                             </Button>

@@ -40,7 +40,7 @@ const About: NextPage = () => {
                 <p>
                     This website is intended to serve as a central hub of information as well as a historical archive of all things SoS. If
                     you're handy with the beep boops, please feel free to contribute to the site via{" "}
-                    <a href="#" target="_blank">
+                    <a href="https://github.com/danhogan/sultansofstats" target="_blank">
                         Github
                     </a>
                     .

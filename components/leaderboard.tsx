@@ -21,6 +21,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import jsonData from "../src/allTheData.json";
+import Chip from "@mui/material/Chip";
+import { green, orange, purple, red, yellow } from "@mui/material/colors";
 
 interface Data {
     teamName: string;
@@ -41,6 +43,19 @@ interface Data {
     ERA: number;
     WHP: number;
     QS: number;
+
+    HRRank: number;
+    RRank: number;
+    RBIRank: number;
+    SBRank: number;
+    OBPRank: number;
+    OPSRank: number;
+    SORank: number;
+    SVRank: number;
+    HDRank: number;
+    ERARank: number;
+    WHPRank: number;
+    QSRank: number;
 }
 
 const regularRows: any = jsonData.theData;
@@ -60,6 +75,19 @@ const rows = regularRows.map((row: any) => {
         ERA: row.stats.ERA,
         WHP: row.stats.WHP,
         QS: row.stats.QS,
+
+        HRRank: row.statValues.HR,
+        RRank: row.statValues.R,
+        RBIRank: row.statValues.RBI,
+        SBRank: row.statValues.SB,
+        OBPRank: row.statValues.OBP,
+        OPSRank: row.statValues.OPS,
+        SORank: row.statValues.SO,
+        SVRank: row.statValues.SV,
+        HDRank: row.statValues.HD,
+        ERARank: row.statValues.ERA,
+        WHPRank: row.statValues.WHP,
+        QSRank: row.statValues.QS,
     };
 });
 
@@ -253,55 +281,24 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     );
 }
 
-interface EnhancedTableToolbarProps {
-    numSelected: number;
+//should just be number, but whatever
+function getColor(rank: any) {
+    let dataCount = rows.length;
+
+    if (rank / dataCount < 0.1) return red[900];
+    if (rank / dataCount < 0.25) return red[700];
+    if (rank / dataCount < 0.4) return red[500];
+    if (rank / dataCount < 0.55) return orange[600];
+    if (rank / dataCount < 0.7) return yellow[700];
+    if (rank / dataCount < 0.85) return green[300];
+    return green[500];
 }
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { numSelected } = props;
-
-    return (
-        <Toolbar
-            sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-                ...(numSelected > 0 && {
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                }),
-            }}
-        >
-            {numSelected > 0 ? (
-                <Typography sx={{ flex: "1 1 100%" }} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
-                    Nutrition
-                </Typography>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton>
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
-        </Toolbar>
-    );
-};
 
 export default function EnhancedTable() {
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("overallRank");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(300);
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
@@ -346,10 +343,6 @@ export default function EnhancedTable() {
         setPage(0);
     };
 
-    const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDense(event.target.checked);
-    };
-
     const isSelected = (name: any) => selected.indexOf(name) !== -1; //"any" was and I guess should be "string"
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -358,9 +351,8 @@ export default function EnhancedTable() {
     return (
         <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
-                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
+                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="small">
                         <EnhancedTableHead
                             numSelected={selected.length}
                             order={order}
@@ -405,25 +397,97 @@ export default function EnhancedTable() {
                                             <TableCell align="right">{row.overallRank}</TableCell>
                                             <TableCell align="right">{row.totalPoints}</TableCell>
 
-                                            <TableCell align="right">{row.HR}</TableCell>
-                                            <TableCell align="right">{row.R}</TableCell>
-                                            <TableCell align="right">{row.RBI}</TableCell>
-                                            <TableCell align="right">{row.SB}</TableCell>
-                                            <TableCell align="right">{row.OBP}</TableCell>
-                                            <TableCell align="right">{row.OPS}</TableCell>
-                                            <TableCell align="right">{row.SO}</TableCell>
-                                            <TableCell align="right">{row.SV}</TableCell>
-                                            <TableCell align="right">{row.HD}</TableCell>
-                                            <TableCell align="right">{row.ERA}</TableCell>
-                                            <TableCell align="right">{row.WHP}</TableCell>
-                                            <TableCell align="right">{row.QS}</TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.HR} (${row.HRRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.HRRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.R} (${row.RRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.RRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.RBI} (${row.RBIRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.RBIRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.SB} (${row.SBRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.SBRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.OBP} (${row.OBPRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.OBPRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.OPS} (${row.OPSRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.OPSRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.SO} (${row.SORank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.SORank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.SV} (${row.SVRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.SVRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.HD} (${row.HDRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.HDRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.ERA} (${row.ERARank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.ERARank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.WHP} (${row.WHPRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.WHPRank) }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.QS} (${row.QSRank})`}
+                                                    color="primary"
+                                                    style={{ backgroundColor: getColor(row.QSRank) }}
+                                                />
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
                                 <TableRow
                                     style={{
-                                        height: (dense ? 33 : 53) * emptyRows,
+                                        height: 33 * emptyRows,
                                     }}
                                 >
                                     <TableCell colSpan={6} />
@@ -442,7 +506,6 @@ export default function EnhancedTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
         </Box>
     );
 }
