@@ -91,8 +91,8 @@ const Header = () => {
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages.map((page) => (
-                            <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                                <Link href={"/" + page.toLowerCase()} sx={{ color: "white", textDecoration: "none" }}>
+                            <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "#FFF", display: "block" }}>
+                                <Link href={"/" + page.toLowerCase()} sx={{ color: "#FFF", textDecoration: "none" }}>
                                     {page}
                                 </Link>
                             </Button>
