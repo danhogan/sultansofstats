@@ -16,7 +16,9 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@mui/x-data-grid": "^5.7.0",
     "next": "latest",
+    "node-fetch": "^2.6.7",
     "react": "latest",
     "react-dom": "latest"
   },
