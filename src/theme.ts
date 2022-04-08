@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import type { } from '@mui/x-data-grid/themeAugmentation';
-import type { } from '@mui/x-data-grid-pro/themeAugmentation';
+// import type { } from '@mui/x-data-grid-pro/themeAugmentation';
 
 declare module '@mui/material/styles' {
     interface BreakpointOverrides {
