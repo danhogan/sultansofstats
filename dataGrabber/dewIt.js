@@ -38,6 +38,7 @@ Promise.all(promises).then((data) => {
                     WHP: team.roto.statValues[4].value.value || 0,
                     QS: team.roto.statValues[5].value.value || 0,
                 },
+                //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
                 statsHistory: {
                     HR: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.HR, team.roto.statValues[6].value.value || 0],
                     R: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.R, team.roto.statValues[7].value.value || 0],
