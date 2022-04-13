@@ -21,11 +21,19 @@ export default function MyApp(props: MyAppProps) {
     return (
         <CacheProvider value={emotionCache}>
             <Head>
-                <meta name="viewport" content="initial-scale=1, width=device-width" />
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <meta property="og:title" content="Sultans of Stats" />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://www.sultansofstats.com/" />
                 <meta property="og:image" content="https://www.sultansofstats.com/images/sos.jpg" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Sultans of Stats" />
+                <meta
+                    name="twitter:description"
+                    content="Sultans of Stats is a 4-division fantasy baseball superleague with yearly relegation based on individual league and overall division standings."
+                />
+                <meta name="twitter:image" content="https://www.sultansofstats.com/images/sos.jpg" />
                 <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
