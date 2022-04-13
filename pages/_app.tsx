@@ -25,7 +25,7 @@ export default function MyApp(props: MyAppProps) {
                 <meta property="og:title" content="Sultans of Stats" />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://www.sultansofstats.com/" />
-                <meta property="og:image" content="/images/sos.jpg" />
+                <meta property="og:image" content="https://www.sultansofstats.com/images/sos.jpg" />
                 <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
