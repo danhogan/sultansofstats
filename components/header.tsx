@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "../src/Link";
 
-const pages = ["About", "Leaderboard", "History"];
+const pages = ["Home", "Leaderboard"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Header = () => {
@@ -74,7 +74,12 @@ const Header = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Link
+                                        href={"/" + (page == "Home" ? "" : page.toLowerCase())}
+                                        sx={{ color: "#FFF", textDecoration: "none" }}
+                                    >
+                                        {page}
+                                    </Link>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -92,7 +97,10 @@ const Header = () => {
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages.map((page) => (
                             <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "#FFF", display: "block" }}>
-                                <Link href={"/" + page.toLowerCase()} sx={{ color: "#FFF", textDecoration: "none" }}>
+                                <Link
+                                    href={"/" + (page == "Home" ? "" : page.toLowerCase())}
+                                    sx={{ color: "#FFF", textDecoration: "none" }}
+                                >
                                     {page}
                                 </Link>
                             </Button>

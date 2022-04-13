@@ -1,8 +1,4 @@
-.big-header {
-    font-size: 10rem;
-    /* text-align: center; */
-    /* font-family: Lato; */
-    /* position: relative; */
+.sos-gradient {
     text-shadow: 6px 6px 9px rgba(120, 120, 120, 0.2);
 
     /*   https://www.joshwcomeau.com/gradient-generator?colors=ed4b25|336597&angle=150&colorMode=hsv&precision=20&easingCurve=0.333|1|0.666|0 */
