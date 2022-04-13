@@ -22,6 +22,10 @@ export default function MyApp(props: MyAppProps) {
         <CacheProvider value={emotionCache}>
             <Head>
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
+                <meta property="og:title" content="Sultans of Stats" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.sultansofstats.com/" />
+                <meta property="og:image" content="/images/sos.jpg" />
                 <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
