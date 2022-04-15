@@ -30,6 +30,8 @@ interface Data {
     leagueRank: number;
     overallRank: number;
     totalPoints: number;
+    leagueId: number;
+    teamId: number;
 
     HR: number;
     R: number;
