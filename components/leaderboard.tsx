@@ -302,8 +302,14 @@ export default function EnhancedTable() {
     const [rowsPerPage, setRowsPerPage] = React.useState(300);
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
-        const isAsc = orderBy === property && order === "asc";
-        setOrder(isAsc ? "desc" : "asc");
+        if (["overallRank", "leagueRank", "leagueName", "teamName"].includes(property)) {
+            const isAsc = orderBy === property && order === "asc";
+            setOrder(isAsc ? "desc" : "asc");
+        } else {
+            const isAsc = orderBy === property && order === "desc";
+            setOrder(isAsc ? "asc" : "desc");
+        }
+
         setOrderBy(property);
     };
 
