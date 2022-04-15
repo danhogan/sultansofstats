@@ -23,18 +23,32 @@ export default function MyApp(props: MyAppProps) {
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <meta property="og:title" content="Sultans of Stats" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://www.sultansofstats.com/" />
-                <meta property="og:image" content="https://www.sultansofstats.com/images/sos.jpg" />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Sultans of Stats" />
+                <link rel="shortcut icon" href="/favicon.ico" />
+
+                <title>Sultans of Stats - Fantasy Baseball Superleague</title>
+                <meta name="title" content="Sultans of Stats - Fantasy Baseball Superleague" />
                 <meta
-                    name="twitter:description"
+                    name="description"
                     content="Sultans of Stats is a 4-division fantasy baseball superleague with yearly relegation based on individual league and overall division standings."
                 />
-                <meta name="twitter:image" content="https://www.sultansofstats.com/images/sos.jpg" />
-                <link rel="shortcut icon" href="/favicon.ico" />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.sultansofstats.com/" />
+                <meta property="og:title" content="Sultans of Stats - Fantasy Baseball Superleague" />
+                <meta
+                    property="og:description"
+                    content="Sultans of Stats is a 4-division fantasy baseball superleague with yearly relegation based on individual league and overall division standings."
+                />
+                <meta property="og:image" content="https://www.sultansofstats.com/images/sos.jpg" />
+
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://www.sultansofstats.com/" />
+                <meta property="twitter:title" content="Sultans of Stats - Fantasy Baseball Superleague" />
+                <meta
+                    property="twitter:description"
+                    content="Sultans of Stats is a 4-division fantasy baseball superleague with yearly relegation based on individual league and overall division standings."
+                />
+                <meta property="twitter:image" content="https://www.sultansofstats.com/images/sos.jpg" />
             </Head>
             <ThemeProvider theme={theme}>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
