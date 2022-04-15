@@ -390,9 +390,18 @@ export default function EnhancedTable() {
                                                 />
                                             </TableCell> */}
                                             <TableCell component="th" id={labelId} scope="row">
-                                                {row.teamName}
+                                                <a
+                                                    target="_blank"
+                                                    href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}/teams/${row.teamId}`}
+                                                >
+                                                    {row.teamName}
+                                                </a>
                                             </TableCell>
-                                            <TableCell align="right">{row.leagueName}</TableCell>
+                                            <TableCell align="right">
+                                                <a target="_blank" href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}`}>
+                                                    {row.leagueName}
+                                                </a>
+                                            </TableCell>
                                             <TableCell align="right">{row.leagueRank}</TableCell>
                                             <TableCell align="right">{row.overallRank}</TableCell>
                                             <TableCell align="right">{row.totalPoints}</TableCell>
