@@ -108,7 +108,7 @@ type Order = "asc" | "desc";
 function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
-): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
+): (a: { [key in Key]: number }, b: { [key in Key]: number }) => number {
     return order === "desc" ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
@@ -427,10 +427,16 @@ export default function EnhancedTable() {
                                                 <Chip label={`${row.SB} (${row.SBRank})`} style={getColor(row.SBRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.OBP} (${row.OBPRank})`} style={getColor(row.OBPRank)} />
+                                                <Chip
+                                                    label={`${(row.OBP / 1000).toFixed(4)} (${row.OBPRank})`}
+                                                    style={getColor(row.OBPRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.OPS} (${row.OPSRank})`} style={getColor(row.OPSRank)} />
+                                                <Chip
+                                                    label={`${(row.OPS / 1000).toFixed(4)} (${row.OPSRank})`}
+                                                    style={getColor(row.OPSRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip label={`${row.SO} (${row.SORank})`} style={getColor(row.SORank)} />
@@ -442,10 +448,10 @@ export default function EnhancedTable() {
                                                 <Chip label={`${row.HD} (${row.HDRank})`} style={getColor(row.HDRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.ERA} (${row.ERARank})`} style={getColor(row.ERARank)} />
+                                                <Chip label={`${row.ERA.toFixed(4)} (${row.ERARank})`} style={getColor(row.ERARank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.WHP} (${row.WHPRank})`} style={getColor(row.WHPRank)} />
+                                                <Chip label={`${row.WHP.toFixed(4)} (${row.WHPRank})`} style={getColor(row.WHPRank)} />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip label={`${row.QS} (${row.QSRank})`} style={getColor(row.QSRank)} />
