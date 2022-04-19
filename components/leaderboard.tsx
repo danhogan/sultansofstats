@@ -20,7 +20,6 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import jsonData from "../src/allTheData.json";
 import Chip from "@mui/material/Chip";
 import { green, orange, red, yellow } from "@mui/material/colors";
 
@@ -29,7 +28,9 @@ interface Data {
     leagueName: string;
     leagueRank: number;
     overallRank: number;
+    divisionRank: number;
     totalPoints: number;
+    divisionPoints: number;
     leagueId: number;
     teamId: number;
 
@@ -58,40 +59,20 @@ interface Data {
     ERARank: number;
     WHPRank: number;
     QSRank: number;
+
+    divisionHRRank: number;
+    divisionRRank: number;
+    divisionRBIRank: number;
+    divisionSBRank: number;
+    divisionOBPRank: number;
+    divisionOPSRank: number;
+    divisionSORank: number;
+    divisionSVRank: number;
+    divisionHDRank: number;
+    divisionERARank: number;
+    divisionWHPRank: number;
+    divisionQSRank: number;
 }
-
-const regularRows: any = jsonData.theData;
-//making things happy with this trashy "flattening"
-const rows = regularRows.map((row: any) => {
-    return {
-        ...row,
-        HR: row.stats.HR,
-        R: row.stats.R,
-        RBI: row.stats.RBI,
-        SB: row.stats.SB,
-        OBP: row.stats.OBP,
-        OPS: row.stats.OPS,
-        SO: row.stats.SO,
-        SV: row.stats.SV,
-        HD: row.stats.HD,
-        ERA: row.stats.ERA,
-        WHP: row.stats.WHP,
-        QS: row.stats.QS,
-
-        HRRank: row.statValues.HR,
-        RRank: row.statValues.R,
-        RBIRank: row.statValues.RBI,
-        SBRank: row.statValues.SB,
-        OBPRank: row.statValues.OBP,
-        OPSRank: row.statValues.OPS,
-        SORank: row.statValues.SO,
-        SVRank: row.statValues.SV,
-        HDRank: row.statValues.HD,
-        ERARank: row.statValues.ERA,
-        WHPRank: row.statValues.WHP,
-        QSRank: row.statValues.QS,
-    };
-});
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -133,112 +114,6 @@ interface HeadCell {
     numeric: boolean;
 }
 
-const headCells: readonly HeadCell[] = [
-    {
-        id: "teamName",
-        numeric: false,
-        disablePadding: false,
-        label: "Team Name",
-    },
-    {
-        id: "leagueName",
-        numeric: false,
-        disablePadding: false,
-        label: "League",
-    },
-    {
-        id: "leagueRank",
-        numeric: true,
-        disablePadding: false,
-        label: "League Rank",
-    },
-    {
-        id: "overallRank",
-        numeric: true,
-        disablePadding: false,
-        label: "Overall Rank",
-    },
-    {
-        id: "totalPoints",
-        numeric: true,
-        disablePadding: false,
-        label: "Total Points",
-    },
-
-    {
-        id: "HR",
-        numeric: true,
-        disablePadding: false,
-        label: "HR",
-    },
-    {
-        id: "R",
-        numeric: true,
-        disablePadding: false,
-        label: "R",
-    },
-    {
-        id: "RBI",
-        numeric: true,
-        disablePadding: false,
-        label: "RBI",
-    },
-    {
-        id: "SB",
-        numeric: true,
-        disablePadding: false,
-        label: "SB",
-    },
-    {
-        id: "OBP",
-        numeric: true,
-        disablePadding: false,
-        label: "OBP",
-    },
-    {
-        id: "OPS",
-        numeric: true,
-        disablePadding: false,
-        label: "OPS",
-    },
-    {
-        id: "SO",
-        numeric: true,
-        disablePadding: false,
-        label: "SO",
-    },
-    {
-        id: "SV",
-        numeric: true,
-        disablePadding: false,
-        label: "SV",
-    },
-    {
-        id: "HD",
-        numeric: true,
-        disablePadding: false,
-        label: "HD",
-    },
-    {
-        id: "ERA",
-        numeric: true,
-        disablePadding: false,
-        label: "ERA",
-    },
-    {
-        id: "WHP",
-        numeric: true,
-        disablePadding: false,
-        label: "WHP",
-    },
-    {
-        id: "QS",
-        numeric: true,
-        disablePadding: false,
-        label: "QS",
-    },
-];
-
 interface EnhancedTableProps {
     numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
@@ -246,10 +121,11 @@ interface EnhancedTableProps {
     order: Order;
     orderBy: string;
     rowCount: number;
+    headCells: HeadCell[];
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
@@ -257,7 +133,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     return (
         <TableHead>
             <TableRow>
-                {headCells.map((headCell) => (
+                {headCells.map((headCell: HeadCell) => (
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? "right" : "left"}
@@ -283,25 +159,121 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     );
 }
 
-//should just be number, but whatever
-function getColor(rank: any) {
-    let dataCount = rows.length;
-
-    if (rank / dataCount < 0.1) return { backgroundColor: red[900] };
-    if (rank / dataCount < 0.25) return { backgroundColor: red[700] };
-    if (rank / dataCount < 0.4) return { backgroundColor: red[500] };
-    if (rank / dataCount < 0.55) return { backgroundColor: orange[600], color: "#000" };
-    if (rank / dataCount < 0.7) return { backgroundColor: yellow[700], color: "#000" };
-    if (rank / dataCount < 0.85) return { backgroundColor: green[300], color: "#000" };
-    return { backgroundColor: green[500], color: "#000" };
-}
-
-export default function EnhancedTable() {
+export default function EnhancedTable(props: any) {
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("overallRank");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(300);
+
+    const overallBool: boolean = props.statValueLocation === "statValues";
+    // const divisionAdd: string = overallBool ? "" : "division";
+
+    const headCells: HeadCell[] = [
+        {
+            id: "teamName",
+            numeric: false,
+            disablePadding: false,
+            label: "Team Name",
+        },
+        {
+            id: "leagueName",
+            numeric: false,
+            disablePadding: false,
+            label: "League",
+        },
+        {
+            id: "leagueRank",
+            numeric: true,
+            disablePadding: false,
+            label: "League Rank",
+        },
+        {
+            id: overallBool ? "overallRank" : "divisionRank",
+            numeric: true,
+            disablePadding: false,
+            label: overallBool ? "Overall Rank" : "Division Rank",
+        },
+        {
+            id: overallBool ? "totalPoints" : "divisionPoints",
+            numeric: true,
+            disablePadding: false,
+            label: overallBool ? "Total Points" : "Division Points",
+        },
+
+        {
+            id: "HR",
+            numeric: true,
+            disablePadding: false,
+            label: "HR",
+        },
+        {
+            id: "R",
+            numeric: true,
+            disablePadding: false,
+            label: "R",
+        },
+        {
+            id: "RBI",
+            numeric: true,
+            disablePadding: false,
+            label: "RBI",
+        },
+        {
+            id: "SB",
+            numeric: true,
+            disablePadding: false,
+            label: "SB",
+        },
+        {
+            id: "OBP",
+            numeric: true,
+            disablePadding: false,
+            label: "OBP",
+        },
+        {
+            id: "OPS",
+            numeric: true,
+            disablePadding: false,
+            label: "OPS",
+        },
+        {
+            id: "SO",
+            numeric: true,
+            disablePadding: false,
+            label: "SO",
+        },
+        {
+            id: "SV",
+            numeric: true,
+            disablePadding: false,
+            label: "SV",
+        },
+        {
+            id: "HD",
+            numeric: true,
+            disablePadding: false,
+            label: "HD",
+        },
+        {
+            id: "ERA",
+            numeric: true,
+            disablePadding: false,
+            label: "ERA",
+        },
+        {
+            id: "WHP",
+            numeric: true,
+            disablePadding: false,
+            label: "WHP",
+        },
+        {
+            id: "QS",
+            numeric: true,
+            disablePadding: false,
+            label: "QS",
+        },
+    ];
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
         if (["overallRank", "leagueRank", "leagueName", "teamName"].includes(property)) {
@@ -353,6 +325,65 @@ export default function EnhancedTable() {
 
     const isSelected = (name: any) => selected.indexOf(name) !== -1; //"any" was and I guess should be "string"
 
+    const regularRows: any = props.data;
+    //making things happy with this trashy "flattening"
+    const rows = regularRows.map((row: any) => {
+        return {
+            ...row,
+            HR: row.stats.HR,
+            R: row.stats.R,
+            RBI: row.stats.RBI,
+            SB: row.stats.SB,
+            OBP: row.stats.OBP,
+            OPS: row.stats.OPS,
+            SO: row.stats.SO,
+            SV: row.stats.SV,
+            HD: row.stats.HD,
+            ERA: row.stats.ERA,
+            WHP: row.stats.WHP,
+            QS: row.stats.QS,
+
+            HRRank: row.statValues.HR,
+            RRank: row.statValues.R,
+            RBIRank: row.statValues.RBI,
+            SBRank: row.statValues.SB,
+            OBPRank: row.statValues.OBP,
+            OPSRank: row.statValues.OPS,
+            SORank: row.statValues.SO,
+            SVRank: row.statValues.SV,
+            HDRank: row.statValues.HD,
+            ERARank: row.statValues.ERA,
+            WHPRank: row.statValues.WHP,
+            QSRank: row.statValues.QS,
+
+            divisionHRRank: row.divisionValues.HR,
+            divisionRRank: row.divisionValues.R,
+            divisionRBIRank: row.divisionValues.RBI,
+            divisionSBRank: row.divisionValues.SB,
+            divisionOBPRank: row.divisionValues.OBP,
+            divisionOPSRank: row.divisionValues.OPS,
+            divisionSORank: row.divisionValues.SO,
+            divisionSVRank: row.divisionValues.SV,
+            divisionHDRank: row.divisionValues.HD,
+            divisionERARank: row.divisionValues.ERA,
+            divisionWHPRank: row.divisionValues.WHP,
+            divisionQSRank: row.divisionValues.QS,
+        };
+    });
+
+    //should just be number, but whatever
+    function getColor(rank: any) {
+        let dataCount = rows.length;
+
+        if (rank / dataCount < 0.1) return { backgroundColor: red[900] };
+        if (rank / dataCount < 0.25) return { backgroundColor: red[700] };
+        if (rank / dataCount < 0.4) return { backgroundColor: red[500] };
+        if (rank / dataCount < 0.55) return { backgroundColor: orange[600], color: "#000" };
+        if (rank / dataCount < 0.7) return { backgroundColor: yellow[700], color: "#000" };
+        if (rank / dataCount < 0.85) return { backgroundColor: green[300], color: "#000" };
+        return { backgroundColor: green[500], color: "#000" };
+    }
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -368,6 +399,7 @@ export default function EnhancedTable() {
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
+                            headCells={headCells}
                         />
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -411,50 +443,84 @@ export default function EnhancedTable() {
                                                 </a>
                                             </TableCell>
                                             <TableCell align="right">{row.leagueRank}</TableCell>
-                                            <TableCell align="right">{row.overallRank}</TableCell>
-                                            <TableCell align="right">{row.totalPoints}</TableCell>
+                                            <TableCell align="right">{overallBool ? row.overallRank : row.divisionRank}</TableCell>
+                                            <TableCell align="right">{overallBool ? row.totalPoints : row.divisionPoints}</TableCell>
 
                                             <TableCell align="right">
-                                                <Chip label={`${row.HR} (${row.HRRank})`} style={getColor(row.HRRank)} />
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Chip label={`${row.R} (${row.RRank})`} style={getColor(row.RRank)} />
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Chip label={`${row.RBI} (${row.RBIRank})`} style={getColor(row.RBIRank)} />
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Chip label={`${row.SB} (${row.SBRank})`} style={getColor(row.SBRank)} />
-                                            </TableCell>
-                                            <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OBP / 1000).toFixed(4)} (${row.OBPRank})`}
-                                                    style={getColor(row.OBPRank)}
+                                                    label={`${row.HR} (${overallBool ? row.HRRank : row.divisionHRRank})`}
+                                                    style={getColor(overallBool ? row.HRRank : row.divisionHRRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OPS / 1000).toFixed(4)} (${row.OPSRank})`}
-                                                    style={getColor(row.OPSRank)}
+                                                    label={`${row.R} (${overallBool ? row.RRank : row.divisionRRank})`}
+                                                    style={getColor(overallBool ? row.RRank : row.divisionRRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.SO} (${row.SORank})`} style={getColor(row.SORank)} />
+                                                <Chip
+                                                    label={`${row.RBI} (${overallBool ? row.RBIRank : row.divisionRBIRank})`}
+                                                    style={getColor(overallBool ? row.RBIRank : row.divisionRBIRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.SV} (${row.SVRank})`} style={getColor(row.SVRank)} />
+                                                <Chip
+                                                    label={`${row.SB} (${overallBool ? row.SBRank : row.divisionSBRank})`}
+                                                    style={getColor(overallBool ? row.SBRank : row.divisionSBRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.HD} (${row.HDRank})`} style={getColor(row.HDRank)} />
+                                                <Chip
+                                                    label={`${(row.OBP / 1000).toFixed(4)} (${
+                                                        overallBool ? row.OBPRank : row.divisionOBPRank
+                                                    })`}
+                                                    style={getColor(overallBool ? row.OBPRank : row.divisionOBPRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.ERA.toFixed(4)} (${row.ERARank})`} style={getColor(row.ERARank)} />
+                                                <Chip
+                                                    label={`${(row.OPS / 1000).toFixed(4)} (${
+                                                        overallBool ? row.OPSRank : row.divisionOPSRank
+                                                    })`}
+                                                    style={getColor(overallBool ? row.OPSRank : row.divisionOPSRank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.WHP.toFixed(4)} (${row.WHPRank})`} style={getColor(row.WHPRank)} />
+                                                <Chip
+                                                    label={`${row.SO} (${overallBool ? row.SORank : row.divisionSORank})`}
+                                                    style={getColor(overallBool ? row.SORank : row.divisionSORank)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip label={`${row.QS} (${row.QSRank})`} style={getColor(row.QSRank)} />
+                                                <Chip
+                                                    label={`${row.SV} (${overallBool ? row.SVRank : row.divisionSVRank})`}
+                                                    style={getColor(overallBool ? row.SVRank : row.divisionSVRank)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.HD} (${overallBool ? row.HDRank : row.divisionHDRank})`}
+                                                    style={getColor(overallBool ? row.HDRank : row.divisionHDRank)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.ERA.toFixed(4)} (${overallBool ? row.ERARank : row.divisionERARank})`}
+                                                    style={getColor(overallBool ? row.ERARank : row.divisionERARank)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.WHP.toFixed(4)} (${overallBool ? row.WHPRank : row.divisionWHPRank})`}
+                                                    style={getColor(overallBool ? row.WHPRank : row.divisionWHPRank)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.QS} (${overallBool ? row.QSRank : row.divisionQSRank})`}
+                                                    style={getColor(overallBool ? row.QSRank : row.divisionQSRank)}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     );
