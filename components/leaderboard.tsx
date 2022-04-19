@@ -22,7 +22,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import jsonData from "../src/allTheData.json";
 import Chip from "@mui/material/Chip";
-import { green, orange, purple, red, yellow } from "@mui/material/colors";
+import { green, orange, red, yellow } from "@mui/material/colors";
 
 interface Data {
     teamName: string;
@@ -287,13 +287,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 function getColor(rank: any) {
     let dataCount = rows.length;
 
-    if (rank / dataCount < 0.1) return red[900];
-    if (rank / dataCount < 0.25) return red[700];
-    if (rank / dataCount < 0.4) return red[500];
-    if (rank / dataCount < 0.55) return orange[600];
-    if (rank / dataCount < 0.7) return yellow[700];
-    if (rank / dataCount < 0.85) return green[300];
-    return green[500];
+    if (rank / dataCount < 0.1) return { backgroundColor: red[900] };
+    if (rank / dataCount < 0.25) return { backgroundColor: red[700] };
+    if (rank / dataCount < 0.4) return { backgroundColor: red[500] };
+    if (rank / dataCount < 0.55) return { backgroundColor: orange[600], color: "#000" };
+    if (rank / dataCount < 0.7) return { backgroundColor: yellow[700], color: "#000" };
+    if (rank / dataCount < 0.85) return { backgroundColor: green[300], color: "#000" };
+    return { backgroundColor: green[500], color: "#000" };
 }
 
 export default function EnhancedTable() {
@@ -415,88 +415,40 @@ export default function EnhancedTable() {
                                             <TableCell align="right">{row.totalPoints}</TableCell>
 
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.HR} (${row.HRRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.HRRank) }}
-                                                />
+                                                <Chip label={`${row.HR} (${row.HRRank})`} style={getColor(row.HRRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.R} (${row.RRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.RRank) }}
-                                                />
+                                                <Chip label={`${row.R} (${row.RRank})`} style={getColor(row.RRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.RBI} (${row.RBIRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.RBIRank) }}
-                                                />
+                                                <Chip label={`${row.RBI} (${row.RBIRank})`} style={getColor(row.RBIRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.SB} (${row.SBRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.SBRank) }}
-                                                />
+                                                <Chip label={`${row.SB} (${row.SBRank})`} style={getColor(row.SBRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.OBP} (${row.OBPRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.OBPRank) }}
-                                                />
+                                                <Chip label={`${row.OBP} (${row.OBPRank})`} style={getColor(row.OBPRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.OPS} (${row.OPSRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.OPSRank) }}
-                                                />
+                                                <Chip label={`${row.OPS} (${row.OPSRank})`} style={getColor(row.OPSRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.SO} (${row.SORank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.SORank) }}
-                                                />
+                                                <Chip label={`${row.SO} (${row.SORank})`} style={getColor(row.SORank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.SV} (${row.SVRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.SVRank) }}
-                                                />
+                                                <Chip label={`${row.SV} (${row.SVRank})`} style={getColor(row.SVRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.HD} (${row.HDRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.HDRank) }}
-                                                />
+                                                <Chip label={`${row.HD} (${row.HDRank})`} style={getColor(row.HDRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.ERA} (${row.ERARank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.ERARank) }}
-                                                />
+                                                <Chip label={`${row.ERA} (${row.ERARank})`} style={getColor(row.ERARank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.WHP} (${row.WHPRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.WHPRank) }}
-                                                />
+                                                <Chip label={`${row.WHP} (${row.WHPRank})`} style={getColor(row.WHPRank)} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.QS} (${row.QSRank})`}
-                                                    color="primary"
-                                                    style={{ backgroundColor: getColor(row.QSRank) }}
-                                                />
+                                                <Chip label={`${row.QS} (${row.QSRank})`} style={getColor(row.QSRank)} />
                                             </TableCell>
                                         </TableRow>
                                     );
