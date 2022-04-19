@@ -276,7 +276,7 @@ export default function EnhancedTable(props: any) {
     ];
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
-        if (["overallRank", "leagueRank", "leagueName", "teamName"].includes(property)) {
+        if (["overallRank", "leagueRank", "leagueName", "teamName", "divisionRank"].includes(property)) {
             const isAsc = orderBy === property && order === "asc";
             setOrder(isAsc ? "desc" : "asc");
         } else {
