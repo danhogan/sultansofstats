@@ -37,6 +37,26 @@ export default function LineChart(props: any) {
                 text: "Day",
             },
         },
+        yaxis: {
+            // title: {
+            //     text: "Amount",
+            // },
+            labels: {
+                formatter(val: any) {
+                    if (["ERA", "WHP", "OBP", "OPS"].includes(props.selectedStat)) {
+                        return parseFloat(val).toFixed(4);
+                    } else {
+                        return parseFloat(val).toFixed(0);
+                    }
+                },
+            },
+        },
+        tooltip: {
+            theme: "dark",
+        },
+        chart: {
+            foreColor: "#BBB",
+        },
         // markers: {
         //     size: 3,
         // },
