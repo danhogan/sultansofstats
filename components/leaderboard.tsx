@@ -21,7 +21,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Chip from "@mui/material/Chip";
-import { green, orange, red, yellow } from "@mui/material/colors";
+import { green, orange, red, yellow, blue } from "@mui/material/colors";
+import CircleIcon from "@mui/icons-material/Circle";
 
 interface Data {
     teamName: string;
@@ -33,6 +34,7 @@ interface Data {
     divisionPoints: number;
     leagueId: number;
     teamId: number;
+    promotion: string;
 
     HR: number;
     R: number;
@@ -384,6 +386,26 @@ export default function EnhancedTable(props: any) {
         return { backgroundColor: green[500], color: "#000" };
     }
 
+    function getPromoColor(promoCode: string): string {
+        if (promoCode == "super") return blue[500];
+        else if (promoCode == "promotion") return green[500];
+        else if (promoCode == "relegation") return red[500];
+        else return yellow[700];
+    }
+
+    function getPromoText(promo: string): string {
+        switch (promo) {
+            case "super":
+                return "Set for double promotion";
+            case "promotion":
+                return "Set for promotion";
+            case "relegation":
+                return "Set for relegation";
+            default:
+                return "Set to stay put";
+        }
+    }
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -404,9 +426,11 @@ export default function EnhancedTable(props: any) {
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {rows
+                                .slice()
+                                .sort(getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
+                                .map((row: Data, index: number) => {
                                     const isItemSelected = isSelected(row.teamName);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -420,16 +444,17 @@ export default function EnhancedTable(props: any) {
                                             key={`${row.teamName}-${row.leagueName}`}
                                             selected={isItemSelected}
                                         >
-                                            {/* <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        "aria-labelledby": labelId,
-                                                    }}
-                                                />
-                                            </TableCell> */}
                                             <TableCell component="th" id={labelId} scope="row">
+                                                <Tooltip title={getPromoText(row.promotion)} placement="top">
+                                                    <CircleIcon
+                                                        style={{
+                                                            color: getPromoColor(row.promotion),
+                                                            fontSize: "1.1em",
+                                                            marginRight: "0.3em",
+                                                            verticalAlign: "middle",
+                                                        }}
+                                                    ></CircleIcon>
+                                                </Tooltip>
                                                 <a
                                                     target="_blank"
                                                     href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}/teams/${row.teamId}`}
