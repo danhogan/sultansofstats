@@ -237,7 +237,7 @@ Promise.all(promises).then((data) => {
                 promo = 'promotion';
             }
 
-            if (team.leagueRank >= 7) {
+            if (team.leagueRank >= 8) {
                 promo = 'relegation';
             }
         }
@@ -247,7 +247,7 @@ Promise.all(promises).then((data) => {
                 promo = 'promotion';
             }
 
-            if (team.leagueRank >= 7) {
+            if (team.leagueRank >= 8) {
                 promo = 'relegation';
             }
 
@@ -293,7 +293,7 @@ Promise.all(promises).then((data) => {
         .filter(y => y.division === 4)
         .filter(notPromoted)
         .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 12);
+        .slice(0, 10);
 
     function yesRelegated(x) {
         return x.promotion == 'relegation';
@@ -303,13 +303,7 @@ Promise.all(promises).then((data) => {
         .filter(y => y.division === 2)
         .filter(yesRelegated)
         .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 5);
-
-    let d3SuperBums = promotionStuff
-        .filter(y => y.division === 3)
-        .filter(yesRelegated)
-        .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 6);
+        .slice(0, 2);
 
     const morePromotionStuff = withOverallRanking.map((team) => {
         let promo = promotionStuff.filter(x => x.teamId == team.teamId)[0].promotion;
@@ -329,12 +323,6 @@ Promise.all(promises).then((data) => {
         d3Bums.forEach((bum) => {
             if (bum.teamId == team.teamId) {
                 promo = 'promotion';
-            }
-        });
-
-        d3SuperBums.forEach((bum) => {
-            if (bum.teamId == team.teamId) {
-                promo = '';
             }
         });
 
