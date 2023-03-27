@@ -34,8 +34,8 @@ const Home: NextPage = () => {
                 <p>
                     Sultans of Stats is a 4-division fantasy baseball superleague with yearly relegation based on individual league and
                     overall division standings hosted on{" "}
-                    <a href="https://fleaflicker.com/" target="_blank">
-                        Fleaflicker
+                    <a href="https://www.fantrax.com/" target="_blank">
+                        Fantrax
                     </a>
                     . The best places to start learning more are the{" "}
                     <a href="https://www.reddit.com/r/SultansOfStats/" target="_blank">
