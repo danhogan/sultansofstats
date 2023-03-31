@@ -497,14 +497,14 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OBP / 1000).toFixed(4)} (${overallBool ? row.OBPRank : row.divisionOBPRank
+                                                    label={`${row.OBP} (${overallBool ? row.OBPRank : row.divisionOBPRank
                                                         })`}
                                                     style={getColor(overallBool ? row.OBPRank : row.divisionOBPRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OPS / 1000).toFixed(4)} (${overallBool ? row.OPSRank : row.divisionOPSRank
+                                                    label={`${row.OPS} (${overallBool ? row.OPSRank : row.divisionOPSRank
                                                         })`}
                                                     style={getColor(overallBool ? row.OPSRank : row.divisionOPSRank)}
                                                 />
