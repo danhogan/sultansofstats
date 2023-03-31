@@ -14,16 +14,21 @@ const d3List = [
 ];
 const d4List = [
     '71ffs8fqlci8hbk4',
+    'pdqu6y6glci8heom',
+    'izk0kwpalci8hi7o',
     'yok9eqt1lci8hl7h',
     'wel1ffjzlci8holo',
-    'dnl2pkxylci8i4h1',
-    '8w86c7mtlci8i12k',
-    'izk0kwpalci8hi7o',
     'diudb961lci8hrlz',
-    'pdqu6y6glci8heom',
     'h9cwytrflci8huvy',
     'av4hwhyulci8hxw5',
+    '8w86c7mtlci8i12k',
+    'dnl2pkxylci8i4h1',
+    'oisr0gvnlci8i9k3',
+    '6ahuaat5lci8iclu',
+    '25qo4fs9lci8ifok',
+    '7xpvgr5zlci8iitc',
 ];
+
 const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
 
 const getDivision = ((leagueId) => {
