@@ -15,7 +15,7 @@
         "@emotion/server": "latest",
         "@emotion/styled": "^11.8.1",
         "@mui/icons-material": "^5.6.2",
-        "@mui/material": "^5.6.4",
+        "@mui/material": "^5.11.15",
         "@mui/x-data-grid": "^5.17.26",
         "@types/react-dom": "^18.0.0",
         "apexcharts": "^3.35.0",
