@@ -445,7 +445,7 @@ export default function EnhancedTable(props: any) {
                                             selected={isItemSelected}
                                         >
                                             <TableCell component="th" id={labelId} scope="row">
-                                                <Tooltip title={getPromoText(row.promotion)} placement="top">
+                                                {/* <Tooltip title={getPromoText(row.promotion)} placement="top">
                                                     <CircleIcon
                                                         style={{
                                                             color: getPromoColor(row.promotion),
@@ -454,18 +454,18 @@ export default function EnhancedTable(props: any) {
                                                             verticalAlign: "middle",
                                                         }}
                                                     ></CircleIcon>
-                                                </Tooltip>
-                                                <a
+                                                </Tooltip> */}
+                                                {/* <a
                                                     target="_blank"
                                                     href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}/teams/${row.teamId}`}
-                                                >
-                                                    {row.teamName}
-                                                </a>
+                                                > */}
+                                                {row.teamName}
+                                                {/* </a> */}
                                             </TableCell>
                                             <TableCell align="right">
-                                                <a target="_blank" href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}`}>
-                                                    {row.leagueName}
-                                                </a>
+                                                {/* <a target="_blank" href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}`}> */}
+                                                {row.leagueName}
+                                                {/* </a> */}
                                             </TableCell>
                                             <TableCell align="right">{row.leagueRank}</TableCell>
                                             <TableCell align="right">{overallBool ? row.overallRank : row.divisionRank}</TableCell>
@@ -497,17 +497,15 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OBP / 1000).toFixed(4)} (${
-                                                        overallBool ? row.OBPRank : row.divisionOBPRank
-                                                    })`}
+                                                    label={`${(row.OBP / 1000).toFixed(4)} (${overallBool ? row.OBPRank : row.divisionOBPRank
+                                                        })`}
                                                     style={getColor(overallBool ? row.OBPRank : row.divisionOBPRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${(row.OPS / 1000).toFixed(4)} (${
-                                                        overallBool ? row.OPSRank : row.divisionOPSRank
-                                                    })`}
+                                                    label={`${(row.OPS / 1000).toFixed(4)} (${overallBool ? row.OPSRank : row.divisionOPSRank
+                                                        })`}
                                                     style={getColor(overallBool ? row.OPSRank : row.divisionOPSRank)}
                                                 />
                                             </TableCell>
@@ -531,13 +529,13 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.ERA.toFixed(4)} (${overallBool ? row.ERARank : row.divisionERARank})`}
+                                                    label={`${row.ERA} (${overallBool ? row.ERARank : row.divisionERARank})`}
                                                     style={getColor(overallBool ? row.ERARank : row.divisionERARank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.WHP.toFixed(4)} (${overallBool ? row.WHPRank : row.divisionWHPRank})`}
+                                                    label={`${row.WHP} (${overallBool ? row.WHPRank : row.divisionWHPRank})`}
                                                     style={getColor(overallBool ? row.WHPRank : row.divisionWHPRank)}
                                                 />
                                             </TableCell>

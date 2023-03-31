@@ -26,7 +26,7 @@ const promises = leagueIds.map((leagueId) => {
 Promise.all(promises).then((data) => {
     //Format league data that we will need
     const allStats = data.map((league) => {
-        return league.responses[0].data.tableList[2].rows.map((team) => {
+        return league.responses[0].data.tableList[3].rows.map((team) => {
             console.log(team)
             return {
                 teamName: team.fixedCells[1].content,
