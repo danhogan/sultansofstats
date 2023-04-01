@@ -1,8 +1,8 @@
 const fetch = require("node-fetch");
 const fs = require('fs');
 
-// const fileName = '../src/allTheData.json';
-// const file = require(fileName);
+const fileName = '../src/allTheData.json';
+const file = require(fileName);
 
 const { leagueIds, getDivision } = require('./divisions');
 
@@ -27,7 +27,6 @@ Promise.all(promises).then((data) => {
     //Format league data that we will need
     const allStats = data.map((league) => {
         return league.responses[0].data.tableList[3].rows.map((team) => {
-            console.log(team)
             return {
                 teamName: team.fixedCells[1].content,
                 teamId: team.fixedCells[1].teamId,
@@ -50,20 +49,20 @@ Promise.all(promises).then((data) => {
                     WHP: team.cells[18].content || 0,
                 },
                 //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
-                // statsHistory: {
-                //     HR: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.HR, team.roto.statValues[6].value.value || 0],
-                //     R: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.R, team.roto.statValues[7].value.value || 0],
-                //     RBI: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.RBI, team.roto.statValues[8].value.value || 0],
-                //     SB: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.SB, team.roto.statValues[9].value.value || 0],
-                //     OBP: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.OBP, team.roto.statValues[10].value.value || 0],
-                //     OPS: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.OPS, team.roto.statValues[11].value.value || 0],
-                //     SO: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.SO, team.roto.statValues[0].value.value || 0],
-                //     SV: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.SV, team.roto.statValues[1].value.value || 0],
-                //     HD: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.HD, team.roto.statValues[2].value.value || 0],
-                //     ERA: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.ERA, team.roto.statValues[3].value.value || 0],
-                //     WHP: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.WHP, team.roto.statValues[4].value.value || 0],
-                //     QS: [...file.theData.filter(x => x.teamId == team.id)[0].statsHistory.QS, team.roto.statValues[5].value.value || 0],
-                // }
+                statsHistory: {
+                    R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, team.cells[6].content || 0],
+                    HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, team.cells[7].content || 0],
+                    RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, team.cells[8].content || 0],
+                    SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, team.cells[9].content || 0],
+                    OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, team.cells[10].content || 0],
+                    OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, team.cells[11].content || 0],
+                    QS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.QS, team.cells[13].content || 0],
+                    SO: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SO, team.cells[14].content || 0],
+                    SV: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SV, team.cells[15].content || 0],
+                    HD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HD, team.cells[16].content || 0],
+                    ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, team.cells[17].content || 0],
+                    WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, team.cells[18].content || 0],
+                }
             }
         });
     });
