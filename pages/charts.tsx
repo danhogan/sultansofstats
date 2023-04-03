@@ -10,7 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const Charts: NextPage = () => {
-    const [selectedLeague, setselectedLeague] = React.useState<any>(23172);
+    const [selectedLeague, setselectedLeague] = React.useState<any>("fmsw2r2blci8ghpy");
     const [selectedStat, setselectedStat] = React.useState<string>("HR");
 
     const formattedData = jsonData.theData
@@ -26,7 +26,7 @@ const Charts: NextPage = () => {
         });
 
     const handleLeagueChange = (event: SelectChangeEvent) => {
-        setselectedLeague(Number(event.target.value) as number);
+        setselectedLeague(event.target.value as string);
     };
 
     const handleStatChange = (event: SelectChangeEvent) => {
@@ -45,29 +45,33 @@ const Charts: NextPage = () => {
                             value={selectedLeague}
                             onChange={handleLeagueChange}
                         >
-                            <MenuItem value={23172}>D1 - The Sultans of Stats</MenuItem>
+                            <MenuItem value={"fmsw2r2blci8ghpy"}>D1 - The Sultans of Stats</MenuItem>
 
-                            <MenuItem value={23173}>D2 - Satchel Paige</MenuItem>
-                            <MenuItem value={23174}>D2 - Minnie Miñoso</MenuItem>
-                            <MenuItem value={23175}>D2 - Josh Gibson</MenuItem>
+                            <MenuItem value={'5u9acbwjlci8gl0h'}>D2 - Jay Johnstone</MenuItem>
+                            <MenuItem value={'e157klkilci8gcwq'}>D2 - Reggie Jackson</MenuItem>
+                            <MenuItem value={'4vg4rvf4lci8goqy'}>D2 - Tim McCarver</MenuItem>
 
-                            <MenuItem value={23176}>D3 - Tim Salmon</MenuItem>
-                            <MenuItem value={23177}>D3 - Garret Anderson</MenuItem>
-                            <MenuItem value={23178}>D3 - Darin Erstad</MenuItem>
-                            <MenuItem value={23179}>D3 - Jim Edmonds</MenuItem>
-                            <MenuItem value={23180}>D3 - Troy Percival</MenuItem>
-                            <MenuItem value={23181}>D3 - Gary DiSarcina</MenuItem>
+                            <MenuItem value={'5i7097l4lci8h8hx'}>D3 - Charlie Hough</MenuItem>
+                            <MenuItem value={'mlhrcb1hlci8h56s'}>D3 - Hoyt Wilhelm</MenuItem>
+                            <MenuItem value={'26eoxjgblci8gs4q'}>D3 - Phil Niekro</MenuItem>
+                            <MenuItem value={'ld3pwp1alci8gvdi'}>D3 - R.A. Dickey</MenuItem>
+                            <MenuItem value={'18vv6tuylci8gz06'}>D3 - Tim Wakefield</MenuItem>
+                            <MenuItem value={'qm1f6p3glci8h225'}>D3 - Tom Candiotti</MenuItem>
 
-                            <MenuItem value={23182}>D4 - Don Mattingly</MenuItem>
-                            <MenuItem value={23183}>D4 - Mike Mussina</MenuItem>
-                            <MenuItem value={23184}>D4 - Alan Trammel</MenuItem>
-                            <MenuItem value={23185}>D4 - Tim Raines</MenuItem>
-                            <MenuItem value={23186}>D4 - Roger Maris</MenuItem>
-                            <MenuItem value={23187}>D4 - Luis Tiant</MenuItem>
-                            <MenuItem value={21599}>D4 - David Cone</MenuItem>
-                            <MenuItem value={21600}>D4 - Dick Allen</MenuItem>
-                            <MenuItem value={21601}>D4 - Larry Walker</MenuItem>
-                            <MenuItem value={21602}>D4 - Edgar Martinez</MenuItem>
+                            <MenuItem value={'71ffs8fqlci8hbk4'}>D4 - Bill Dahlen</MenuItem>
+                            <MenuItem value={'pdqu6y6glci8heom'}>D4 - Shoeless Joe Jackson</MenuItem>
+                            <MenuItem value={'izk0kwpalci8hi7o'}>D4 - Pete Browning</MenuItem>
+                            <MenuItem value={'yok9eqt1lci8hl7h'}>D4 - Cupid Childs</MenuItem>
+                            <MenuItem value={'wel1ffjzlci8holo'}>D4 - Fielder Jones</MenuItem>
+                            <MenuItem value={'diudb961lci8hrlz'}>D4 - Sherry Magee</MenuItem>
+                            <MenuItem value={'h9cwytrflci8huvy'}>D4 - The Only Nolan</MenuItem>
+                            <MenuItem value={'av4hwhyulci8hxw5'}>D4 - Tommy Leach</MenuItem>
+                            <MenuItem value={'8w86c7mtlci8i12k'}>D4 - Lave Cross</MenuItem>
+                            <MenuItem value={'dnl2pkxylci8i4h1'}>D4 - Harry Stovey</MenuItem>
+                            <MenuItem value={'oisr0gvnlci8i9k3'}>D4 - Ed Konetchy</MenuItem>
+                            <MenuItem value={'6ahuaat5lci8iclu'}>D4 - Jimmy Sheckard</MenuItem>
+                            <MenuItem value={'25qo4fs9lci8ifok'}>D4 - Jake Daubert</MenuItem>
+                            <MenuItem value={'7xpvgr5zlci8iitc'}>D4 - Tony Mullane</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
