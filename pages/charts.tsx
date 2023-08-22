@@ -16,13 +16,12 @@ const Charts: NextPage = () => {
     const formattedData = jsonData.theData
         .filter((z) => z.leagueId == selectedLeague)
         .map((x: any) => {
-            const dataWithReplacedCommas = x.statsHistory[selectedStat].map((item: string) => {
-                return Number(item.replace(/\,/g, ''));
-            });
-    
             return {
                 name: x.teamName,
-                data: dataWithReplacedCommas,
+                data: x.statsHistory[selectedStat],
+                // data: x.statsHistory[selectedStat].map((y: number) => {
+                //     return ["OBP", "OPS"].includes(selectedStat) ? y / 1000 : y;
+                // }),
             };
         });
 
