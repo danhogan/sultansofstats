@@ -35,33 +35,33 @@ Promise.all(promises).then((data) => {
                 leagueRank: team.fixedCells[0].content, //not sure about this one
                 division: getDivision(team.fixedCells[1].leagueId),
                 stats: {
-                    R: Number(team.cells[6].content.replace(/\,/g,'')) || 0,
-                    HR: Number(team.cells[7].content.replace(/\,/g,'')) || 0,
-                    RBI: Number(team.cells[8].content.replace(/\,/g,'')) || 0,
-                    SB: Number(team.cells[9].content.replace(/\,/g,'')) || 0,
-                    OBP: Number(team.cells[10].content.replace(/\,/g,'')) || 0,
-                    OPS: Number(team.cells[11].content.replace(/\,/g,'')) || 0,
-                    QS: Number(team.cells[13].content.replace(/\,/g,'')) || 0,
-                    SO: Number(team.cells[14].content.replace(/\,/g,'')) || 0,
-                    SV: Number(team.cells[15].content.replace(/\,/g,'')) || 0,
-                    HD: Number(team.cells[16].content.replace(/\,/g,'')) || 0,
-                    ERA: Number(team.cells[17].content.replace(/\,/g,'')) || 0,
-                    WHP: Number(team.cells[18].content.replace(/\,/g,'')) || 0,
+                    R: Number(team.cells[6].toolTip.replace(/\,/g,'')) || 0,
+                    HR: Number(team.cells[7].toolTip.replace(/\,/g,'')) || 0,
+                    RBI: Number(team.cells[8].toolTip.replace(/\,/g,'')) || 0,
+                    SB: Number(team.cells[9].toolTip.replace(/\,/g,'')) || 0,
+                    OBP: Number(team.cells[10].toolTip.replace(/\,/g,'')) || 0,
+                    OPS: Number(team.cells[11].toolTip.replace(/\,/g,'')) || 0,
+                    QS: Number(team.cells[13].toolTip.replace(/\,/g,'')) || 0,
+                    SO: Number(team.cells[14].toolTip.replace(/\,/g,'')) || 0,
+                    SV: Number(team.cells[15].toolTip.replace(/\,/g,'')) || 0,
+                    HD: Number(team.cells[16].toolTip.replace(/\,/g,'')) || 0,
+                    ERA: Number(team.cells[17].toolTip.replace(/\,/g,'')) || 0,
+                    WHP: Number(team.cells[18].toolTip.replace(/\,/g,'')) || 0,
                 },
                 //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
                 statsHistory: {
-                    R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].content.replace(/\,/g,'')) || 0],
-                    HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, Number(team.cells[7].content.replace(/\,/g,'')) || 0],
-                    RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, Number(team.cells[8].content.replace(/\,/g,'')) || 0],
-                    SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, Number(team.cells[9].content.replace(/\,/g,'')) || 0],
-                    OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, Number(team.cells[10].content.replace(/\,/g,'')) || 0],
-                    OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, Number(team.cells[11].content.replace(/\,/g,'')) || 0],
-                    QS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.QS, Number(team.cells[13].content.replace(/\,/g,'')) || 0],
-                    SO: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SO, Number(team.cells[14].content.replace(/\,/g,'')) || 0],
-                    SV: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SV, Number(team.cells[15].content.replace(/\,/g,'')) || 0],
-                    HD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HD, Number(team.cells[16].content.replace(/\,/g,'')) || 0],
-                    ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, Number(team.cells[17].content.replace(/\,/g,'')) || 0],
-                    WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, Number(team.cells[18].content.replace(/\,/g,'')) || 0],
+                    R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].toolTip.replace(/\,/g,'')) || 0],
+                    HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, Number(team.cells[7].toolTip.replace(/\,/g,'')) || 0],
+                    RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, Number(team.cells[8].toolTip.replace(/\,/g,'')) || 0],
+                    SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, Number(team.cells[9].toolTip.replace(/\,/g,'')) || 0],
+                    OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, Number(team.cells[10].toolTip.replace(/\,/g,'')) || 0],
+                    OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, Number(team.cells[11].toolTip.replace(/\,/g,'')) || 0],
+                    QS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.QS, Number(team.cells[13].toolTip.replace(/\,/g,'')) || 0],
+                    SO: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SO, Number(team.cells[14].toolTip.replace(/\,/g,'')) || 0],
+                    SV: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SV, Number(team.cells[15].toolTip.replace(/\,/g,'')) || 0],
+                    HD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HD, Number(team.cells[16].toolTip.replace(/\,/g,'')) || 0],
+                    ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, Number(team.cells[17].toolTip.replace(/\,/g,'')) || 0],
+                    WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, Number(team.cells[18].toolTip.replace(/\,/g,'')) || 0],
                 }
             }
         });
@@ -271,7 +271,7 @@ Promise.all(promises).then((data) => {
                 promo = 'promotion';
             }
 
-            if (team.divisionRank === 1) {
+            if (team.divisionRank <= 2) {
                 promo = 'super';
             }
         }

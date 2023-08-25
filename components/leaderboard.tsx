@@ -497,14 +497,14 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.OBP} (${overallBool ? row.OBPRank : row.divisionOBPRank
+                                                    label={`${row.OBP.toFixed(3)} (${overallBool ? row.OBPRank : row.divisionOBPRank
                                                         })`}
                                                     style={getColor(overallBool ? row.OBPRank : row.divisionOBPRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.OPS} (${overallBool ? row.OPSRank : row.divisionOPSRank
+                                                    label={`${row.OPS.toFixed(3)} (${overallBool ? row.OPSRank : row.divisionOPSRank
                                                         })`}
                                                     style={getColor(overallBool ? row.OPSRank : row.divisionOPSRank)}
                                                 />
@@ -529,13 +529,13 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.ERA} (${overallBool ? row.ERARank : row.divisionERARank})`}
+                                                    label={`${row.ERA.toFixed(2)} (${overallBool ? row.ERARank : row.divisionERARank})`}
                                                     style={getColor(overallBool ? row.ERARank : row.divisionERARank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.WHP} (${overallBool ? row.WHPRank : row.divisionWHPRank})`}
+                                                    label={`${row.WHP.toFixed(3)} (${overallBool ? row.WHPRank : row.divisionWHPRank})`}
                                                     style={getColor(overallBool ? row.WHPRank : row.divisionWHPRank)}
                                                 />
                                             </TableCell>
