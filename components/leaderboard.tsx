@@ -455,17 +455,17 @@ export default function EnhancedTable(props: any) {
                                                         }}
                                                     ></CircleIcon>
                                                 </Tooltip>
-                                                {/* <a
+                                                <a
                                                     target="_blank"
-                                                    href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}/teams/${row.teamId}`}
-                                                > */}
-                                                {row.teamName}
-                                                {/* </a> */}
+                                                    href={`https://www.fantrax.com/fantasy/league/${row.leagueId}/team/roster;teamId=${row.teamId}`}
+                                                >
+                                                    {row.teamName}
+                                                </a>
                                             </TableCell>
                                             <TableCell align="right">
-                                                {/* <a target="_blank" href={`https://www.fleaflicker.com/mlb/leagues/${row.leagueId}`}> */}
-                                                {row.leagueName}
-                                                {/* </a> */}
+                                                <a target="_blank" href={`https://www.fantrax.com/fantasy/league/${row.leagueId}/standings`}>
+                                                    {row.leagueName}
+                                                </a>
                                             </TableCell>
                                             <TableCell align="right">{row.leagueRank}</TableCell>
                                             <TableCell align="right">{overallBool ? row.overallRank : row.divisionRank}</TableCell>
