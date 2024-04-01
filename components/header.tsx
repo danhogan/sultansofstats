@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import Link from "../src/Link";
+import { Link } from '@mui/material';
 import Image from 'next/image';
 
 const pages = ["Home", "Leaderboard", "Charts"];
@@ -41,7 +41,7 @@ const Header = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Link href="/" className="main-logo" sx={{ mr: 2, display: { xs: "none", md: "flex" }, textDecoration: "none" }}>
-                        <Image src="/images/sos.jpg" alt="SOS Logo" width={500} height={500} />
+                        <img src="/images/sos.jpg"></img>
                     </Link>
 
                     <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
