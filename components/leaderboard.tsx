@@ -36,44 +36,44 @@ interface Data {
     teamId: number;
     promotion: string;
 
-    HR: number;
     R: number;
+    HR: number;
     RBI: number;
     SB: number;
     OBP: number;
     OPS: number;
-    SO: number;
-    SV: number;
-    HD: number;
+    WQS: number;
+    K: number;
+    K9: number;
+    SVHLD: number;
     ERA: number;
     WHP: number;
-    QS: number;
 
-    HRRank: number;
     RRank: number;
+    HRRank: number;
     RBIRank: number;
     SBRank: number;
     OBPRank: number;
     OPSRank: number;
-    SORank: number;
-    SVRank: number;
-    HDRank: number;
+    WQSRank: number;
+    KRank: number;
+    K9Rank: number;
+    SVHLDRank: number;
     ERARank: number;
     WHPRank: number;
-    QSRank: number;
 
-    divisionHRRank: number;
     divisionRRank: number;
+    divisionHRRank: number;
     divisionRBIRank: number;
     divisionSBRank: number;
     divisionOBPRank: number;
     divisionOPSRank: number;
-    divisionSORank: number;
-    divisionSVRank: number;
-    divisionHDRank: number;
+    divisionWQSRank: number;
+    divisionKRank: number;
+    divisionK9Rank: number;
+    divisionSVHLDRank: number;
     divisionERARank: number;
     divisionWHPRank: number;
-    divisionQSRank: number;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -204,16 +204,16 @@ export default function EnhancedTable(props: any) {
         },
 
         {
-            id: "HR",
-            numeric: true,
-            disablePadding: false,
-            label: "HR",
-        },
-        {
             id: "R",
             numeric: true,
             disablePadding: false,
             label: "R",
+        },
+        {
+            id: "HR",
+            numeric: true,
+            disablePadding: false,
+            label: "HR",
         },
         {
             id: "RBI",
@@ -240,22 +240,28 @@ export default function EnhancedTable(props: any) {
             label: "OPS",
         },
         {
-            id: "SO",
+            id: "WQS",
             numeric: true,
             disablePadding: false,
-            label: "SO",
+            label: "W+QS",
         },
         {
-            id: "SV",
+            id: "K",
             numeric: true,
             disablePadding: false,
-            label: "SV",
+            label: "K",
         },
         {
-            id: "HD",
+            id: "K9",
             numeric: true,
             disablePadding: false,
-            label: "HD",
+            label: "K/9",
+        },
+        {
+            id: "SVHLD",
+            numeric: true,
+            disablePadding: false,
+            label: "SV+HLD",
         },
         {
             id: "ERA",
@@ -268,12 +274,6 @@ export default function EnhancedTable(props: any) {
             numeric: true,
             disablePadding: false,
             label: "WHP",
-        },
-        {
-            id: "QS",
-            numeric: true,
-            disablePadding: false,
-            label: "QS",
         },
     ];
 
@@ -332,44 +332,44 @@ export default function EnhancedTable(props: any) {
     const rows = regularRows.map((row: any) => {
         return {
             ...row,
-            HR: row.stats.HR,
             R: row.stats.R,
+            HR: row.stats.HR,
             RBI: row.stats.RBI,
             SB: row.stats.SB,
             OBP: row.stats.OBP,
             OPS: row.stats.OPS,
+            WQS: row.stats.WQS,
             SO: row.stats.SO,
-            SV: row.stats.SV,
-            HD: row.stats.HD,
+            K9: row.stats.K9,
+            SVHLD: row.stats.SVHLD,
             ERA: row.stats.ERA,
             WHP: row.stats.WHP,
-            QS: row.stats.QS,
 
-            HRRank: row.statValues.HR,
             RRank: row.statValues.R,
+            HRRank: row.statValues.HR,
             RBIRank: row.statValues.RBI,
             SBRank: row.statValues.SB,
             OBPRank: row.statValues.OBP,
             OPSRank: row.statValues.OPS,
+            WQSRank: row.statValues.WQS,
             SORank: row.statValues.SO,
-            SVRank: row.statValues.SV,
-            HDRank: row.statValues.HD,
+            K9Rank: row.statValues.K9,
+            SVHLDRank: row.statValues.SVHLD,
             ERARank: row.statValues.ERA,
             WHPRank: row.statValues.WHP,
-            QSRank: row.statValues.QS,
 
-            divisionHRRank: row.divisionValues.HR,
             divisionRRank: row.divisionValues.R,
+            divisionHRRank: row.divisionValues.HR,
             divisionRBIRank: row.divisionValues.RBI,
             divisionSBRank: row.divisionValues.SB,
             divisionOBPRank: row.divisionValues.OBP,
             divisionOPSRank: row.divisionValues.OPS,
+            divisionWQSRank: row.divisionValues.WQS,
             divisionSORank: row.divisionValues.SO,
-            divisionSVRank: row.divisionValues.SV,
-            divisionHDRank: row.divisionValues.HD,
+            divisionK9Rank: row.divisionValues.K9,
+            divisionSVHLDRank: row.divisionValues.SVHLD,
             divisionERARank: row.divisionValues.ERA,
             divisionWHPRank: row.divisionValues.WHP,
-            divisionQSRank: row.divisionValues.QS,
         };
     });
 
@@ -473,14 +473,14 @@ export default function EnhancedTable(props: any) {
 
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.HR} (${overallBool ? row.HRRank : row.divisionHRRank})`}
-                                                    style={getColor(overallBool ? row.HRRank : row.divisionHRRank)}
+                                                    label={`${row.R} (${overallBool ? row.RRank : row.divisionRRank})`}
+                                                    style={getColor(overallBool ? row.RRank : row.divisionRRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.R} (${overallBool ? row.RRank : row.divisionRRank})`}
-                                                    style={getColor(overallBool ? row.RRank : row.divisionRRank)}
+                                                    label={`${row.HR} (${overallBool ? row.HRRank : row.divisionHRRank})`}
+                                                    style={getColor(overallBool ? row.HRRank : row.divisionHRRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
@@ -511,20 +511,26 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.SO} (${overallBool ? row.SORank : row.divisionSORank})`}
-                                                    style={getColor(overallBool ? row.SORank : row.divisionSORank)}
+                                                    label={`${row.WQS} (${overallBool ? row.WQSRank : row.divisionWQSRank})`}
+                                                    style={getColor(overallBool ? row.WQSRank : row.divisionWQSRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.SV} (${overallBool ? row.SVRank : row.divisionSVRank})`}
-                                                    style={getColor(overallBool ? row.SVRank : row.divisionSVRank)}
+                                                    label={`${row.K} (${overallBool ? row.KRank : row.divisionKRank})`}
+                                                    style={getColor(overallBool ? row.KRank : row.divisionKRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.HD} (${overallBool ? row.HDRank : row.divisionHDRank})`}
-                                                    style={getColor(overallBool ? row.HDRank : row.divisionHDRank)}
+                                                    label={`${row.K9.toFixed(3)} (${overallBool ? row.K9Rank : row.divisionK9Rank})`}
+                                                    style={getColor(overallBool ? row.K9Rank : row.divisionK9Rank)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={`${row.SVHLD} (${overallBool ? row.SVHLDRank : row.divisionSVHLDRank})`}
+                                                    style={getColor(overallBool ? row.SVHLDRank : row.divisionSVHLDRank)}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
@@ -539,12 +545,7 @@ export default function EnhancedTable(props: any) {
                                                     style={getColor(overallBool ? row.WHPRank : row.divisionWHPRank)}
                                                 />
                                             </TableCell>
-                                            <TableCell align="right">
-                                                <Chip
-                                                    label={`${row.QS} (${overallBool ? row.QSRank : row.divisionQSRank})`}
-                                                    style={getColor(overallBool ? row.QSRank : row.divisionQSRank)}
-                                                />
-                                            </TableCell>
+
                                         </TableRow>
                                     );
                                 })}

@@ -79,18 +79,18 @@ const Charts: NextPage = () => {
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Stat</InputLabel>
                         <Select labelId="demo-simple-select-label" id="demo-simple-select" value={selectedStat} onChange={handleStatChange}>
-                            <MenuItem value={"HR"}>Home Runs</MenuItem>
                             <MenuItem value={"R"}>Runs</MenuItem>
+                            <MenuItem value={"HR"}>Home Runs</MenuItem>
                             <MenuItem value={"RBI"}>RBI</MenuItem>
                             <MenuItem value={"SB"}>Steals</MenuItem>
                             <MenuItem value={"OBP"}>OBP</MenuItem>
                             <MenuItem value={"OPS"}>OPS</MenuItem>
+                            <MenuItem value={"QS"}>W+QS</MenuItem>
                             <MenuItem value={"SO"}>Strikeouts</MenuItem>
-                            <MenuItem value={"SV"}>Saves</MenuItem>
-                            <MenuItem value={"HD"}>Holds</MenuItem>
+                            <MenuItem value={"K9"}>K/9</MenuItem>
+                            <MenuItem value={"SV"}>SV+HLD</MenuItem>
                             <MenuItem value={"ERA"}>ERA</MenuItem>
                             <MenuItem value={"WHP"}>WHIP</MenuItem>
-                            <MenuItem value={"QS"}>Quality Starts</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
