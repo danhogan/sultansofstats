@@ -45,33 +45,32 @@ const Charts: NextPage = () => {
                             value={selectedLeague}
                             onChange={handleLeagueChange}
                         >
-                            <MenuItem value={"fmsw2r2blci8ghpy"}>D1 - The Sultans of Stats</MenuItem>
+                            {/* TODO: Pull this stuff dynamically */}
+                            <MenuItem value={"e3px47n0lr7xx2y9"}>D1 - The Sultans of Stats</MenuItem>
 
-                            <MenuItem value={'5u9acbwjlci8gl0h'}>D2 - Jay Johnstone</MenuItem>
-                            <MenuItem value={'e157klkilci8gcwq'}>D2 - Reggie Jackson</MenuItem>
-                            <MenuItem value={'4vg4rvf4lci8goqy'}>D2 - Tim McCarver</MenuItem>
+                            <MenuItem value={'88ggwnu4lr7xxkg8'}>D2 - Flea Clifton</MenuItem>
+                            <MenuItem value={'7vlt8wtklr7xxtne'}>D2 - Alex Flicker</MenuItem>
+                            <MenuItem value={'77en7xmelr7xy3n1'}>D2 - Mortiz Seider</MenuItem>
 
-                            <MenuItem value={'5i7097l4lci8h8hx'}>D3 - Charlie Hough</MenuItem>
-                            <MenuItem value={'mlhrcb1hlci8h56s'}>D3 - Hoyt Wilhelm</MenuItem>
-                            <MenuItem value={'26eoxjgblci8gs4q'}>D3 - Phil Niekro</MenuItem>
-                            <MenuItem value={'ld3pwp1alci8gvdi'}>D3 - R.A. Dickey</MenuItem>
-                            <MenuItem value={'18vv6tuylci8gz06'}>D3 - Tim Wakefield</MenuItem>
-                            <MenuItem value={'qm1f6p3glci8h225'}>D3 - Tom Candiotti</MenuItem>
+                            <MenuItem value={'y6zp4bfslr7xyfbe'}>D3 - Ron Santo</MenuItem>
+                            <MenuItem value={'kpc4liy3lr7xyner'}>D3 - Sammy Sosa</MenuItem>
+                            <MenuItem value={'wm8ixb3flr7y4vh5'}>D3 - Greg Maddux</MenuItem>
+                            <MenuItem value={'838h7q3plr7xz1nt'}>D3 - Moises Alou</MenuItem>
+                            <MenuItem value={'24f5ki4tlr7xza1j'}>D3 - Kyle Hendricks</MenuItem>
+                            <MenuItem value={'ou1xzkfplr7xzie8'}>D3 - Bryzzo Souvenir</MenuItem>
+                            <MenuItem value={'ls0uwwrqlr7xyuss'}>D3 - Steve Bartman</MenuItem>
 
-                            <MenuItem value={'71ffs8fqlci8hbk4'}>D4 - Bill Dahlen</MenuItem>
-                            <MenuItem value={'pdqu6y6glci8heom'}>D4 - Shoeless Joe Jackson</MenuItem>
-                            <MenuItem value={'izk0kwpalci8hi7o'}>D4 - Pete Browning</MenuItem>
-                            <MenuItem value={'yok9eqt1lci8hl7h'}>D4 - Cupid Childs</MenuItem>
-                            <MenuItem value={'wel1ffjzlci8holo'}>D4 - Fielder Jones</MenuItem>
-                            <MenuItem value={'diudb961lci8hrlz'}>D4 - Sherry Magee</MenuItem>
-                            <MenuItem value={'h9cwytrflci8huvy'}>D4 - The Only Nolan</MenuItem>
-                            <MenuItem value={'av4hwhyulci8hxw5'}>D4 - Tommy Leach</MenuItem>
-                            <MenuItem value={'8w86c7mtlci8i12k'}>D4 - Lave Cross</MenuItem>
-                            <MenuItem value={'dnl2pkxylci8i4h1'}>D4 - Harry Stovey</MenuItem>
-                            <MenuItem value={'oisr0gvnlci8i9k3'}>D4 - Ed Konetchy</MenuItem>
-                            <MenuItem value={'6ahuaat5lci8iclu'}>D4 - Jimmy Sheckard</MenuItem>
-                            <MenuItem value={'25qo4fs9lci8ifok'}>D4 - Jake Daubert</MenuItem>
-                            <MenuItem value={'7xpvgr5zlci8iitc'}>D4 - Tony Mullane</MenuItem>
+                            <MenuItem value={'3y3ol2vzlr7xzq5s'}>D4 - Pete Alonso</MenuItem>
+                            <MenuItem value={'yr8kla9jlr7y38vm'}>D4 - Jonathan India</MenuItem>
+                            <MenuItem value={'mb8xviqylr7y2zvv'}>D4 - A.J</MenuItem>
+                            <MenuItem value={'d9idp3pzlr7y2p5d'}>D4 - Brady Singer</MenuItem>
+                            <MenuItem value={'qnyleexplr7y2dze'}>D4 - Harrison Bader</MenuItem>
+                            <MenuItem value={'di1qgcmtlr7y2489'}>D4 - Wyatt Langford</MenuItem>
+                            <MenuItem value={'scq69b6xlr7y1suk'}>D4 - Hurston Waldrep</MenuItem>
+                            <MenuItem value={'f168202alr7y1egz'}>D4 - Mike Zunino</MenuItem>
+                            <MenuItem value={'b3xezupjlr7y17rx'}>D4 - Anthony DeSclafani</MenuItem>
+                            <MenuItem value={'kydzgf8clr7y0zue'}>D4 - Dane Dunning</MenuItem>
+                            <MenuItem value={'2xpo8hpflr7y0om1'}>D4 - Kirby Snead</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
