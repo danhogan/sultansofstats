@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from '@mui/material';
 import Image from 'next/image';
 
-const pages = ["Home", "Leaderboard", "Charts"];
+const pages = ["Home", "Leaderboard"]; //temporarily removing `, "Charts"` until I fix statHistory
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Header = () => {

@@ -1,10 +1,8 @@
-const fetch = require("node-fetch");
-const fs = require('fs');
+import fetch from "node-fetch";
+import fs from 'fs';
 
-const fileName = '../src/allTheData.json';
-const file = require(fileName);
-
-const { leagueIds, getDivision } = require('./divisions');
+import file from '../src/allTheData.json' with { type: "json" };
+import { leagueIds, getDivision } from './divisions.js';
 
 const doTheDew = async function (leagueId) {
     const body = { msgs: [{ method: "getStandings", data: { leagueId: leagueId } }] };
@@ -35,34 +33,34 @@ Promise.all(promises).then((data) => {
                 leagueRank: team.fixedCells[0].content, //not sure about this one
                 division: getDivision(team.fixedCells[1].leagueId),
                 stats: {
-                    R: Number(team.cells[6].toolTip.replace(/\,/g,'')) || 0,
-                    HR: Number(team.cells[7].toolTip.replace(/\,/g,'')) || 0,
-                    RBI: Number(team.cells[8].toolTip.replace(/\,/g,'')) || 0,
-                    SB: Number(team.cells[9].toolTip.replace(/\,/g,'')) || 0,
-                    OBP: Number(team.cells[10].toolTip.replace(/\,/g,'')) || 0,
-                    OPS: Number(team.cells[11].toolTip.replace(/\,/g,'')) || 0,
-                    QS: Number(team.cells[13].toolTip.replace(/\,/g,'')) || 0,
-                    SO: Number(team.cells[14].toolTip.replace(/\,/g,'')) || 0,
-                    SV: Number(team.cells[15].toolTip.replace(/\,/g,'')) || 0,
-                    HD: Number(team.cells[16].toolTip.replace(/\,/g,'')) || 0,
-                    ERA: Number(team.cells[17].toolTip.replace(/\,/g,'')) || 0,
-                    WHP: Number(team.cells[18].toolTip.replace(/\,/g,'')) || 0,
+                    R: Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0,
+                    HR: Number(team.cells[7].toolTip.replace(/\,/g, '')) || 0,
+                    RBI: Number(team.cells[8].toolTip.replace(/\,/g, '')) || 0,
+                    SB: Number(team.cells[9].toolTip.replace(/\,/g, '')) || 0,
+                    OBP: Number(team.cells[10].toolTip.replace(/\,/g, '')) || 0,
+                    OPS: Number(team.cells[11].toolTip.replace(/\,/g, '')) || 0,
+                    WQS: Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0,
+                    K: Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0,
+                    K9: Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0,
+                    SVHLD: Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0,
+                    ERA: Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0,
+                    WHP: Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0,
                 },
                 //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
-                statsHistory: {
-                    R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].toolTip.replace(/\,/g,'')) || 0],
-                    HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, Number(team.cells[7].toolTip.replace(/\,/g,'')) || 0],
-                    RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, Number(team.cells[8].toolTip.replace(/\,/g,'')) || 0],
-                    SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, Number(team.cells[9].toolTip.replace(/\,/g,'')) || 0],
-                    OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, Number(team.cells[10].toolTip.replace(/\,/g,'')) || 0],
-                    OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, Number(team.cells[11].toolTip.replace(/\,/g,'')) || 0],
-                    QS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.QS, Number(team.cells[13].toolTip.replace(/\,/g,'')) || 0],
-                    SO: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SO, Number(team.cells[14].toolTip.replace(/\,/g,'')) || 0],
-                    SV: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SV, Number(team.cells[15].toolTip.replace(/\,/g,'')) || 0],
-                    HD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HD, Number(team.cells[16].toolTip.replace(/\,/g,'')) || 0],
-                    ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, Number(team.cells[17].toolTip.replace(/\,/g,'')) || 0],
-                    WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, Number(team.cells[18].toolTip.replace(/\,/g,'')) || 0],
-                }
+                // statsHistory: {
+                //     R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0],
+                //     HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, Number(team.cells[7].toolTip.replace(/\,/g, '')) || 0],
+                //     RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, Number(team.cells[8].toolTip.replace(/\,/g, '')) || 0],
+                //     SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, Number(team.cells[9].toolTip.replace(/\,/g, '')) || 0],
+                //     OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, Number(team.cells[10].toolTip.replace(/\,/g, '')) || 0],
+                //     OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, Number(team.cells[11].toolTip.replace(/\,/g, '')) || 0],
+                //     WQS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WQS, Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0],
+                //     K: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.K, Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0],
+                //     K9: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.K9, Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0],
+                //     SVHLD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SVHLD, Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0],
+                //     ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0],
+                //     WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0],
+                // }
             }
         });
     });
@@ -86,36 +84,36 @@ Promise.all(promises).then((data) => {
 
     class statObjectClass {
         constructor() {
-            this.HR = [];
             this.R = [];
+            this.HR = [];
             this.RBI = [];
             this.SB = [];
             this.OBP = [];
             this.OPS = [];
-            this.SO = [];
-            this.SV = [];
-            this.HD = [];
+            this.WQS = [];
+            this.K = [];
+            this.K9 = [];
+            this.SVHLD = [];
             this.ERA = [];
             this.WHP = [];
-            this.QS = [];
         }
     }
 
     //Put all stats in category-specific arrays for ranking
     let statObject = new statObjectClass();
     statsTogether.forEach((team) => {
-        statObject.HR.push(team.stats.HR);
         statObject.R.push(team.stats.R);
+        statObject.HR.push(team.stats.HR);
         statObject.RBI.push(team.stats.RBI);
         statObject.SB.push(team.stats.SB);
         statObject.OBP.push(team.stats.OBP);
         statObject.OPS.push(team.stats.OPS);
-        statObject.SO.push(team.stats.SO);
-        statObject.SV.push(team.stats.SV);
-        statObject.HD.push(team.stats.HD);
+        statObject.WQS.push(team.stats.WQS);
+        statObject.K.push(team.stats.K);
+        statObject.K9.push(team.stats.K9);
+        statObject.SVHLD.push(team.stats.SVHLD);
         statObject.ERA.push(team.stats.ERA);
         statObject.WHP.push(team.stats.WHP);
-        statObject.QS.push(team.stats.QS);
     });
 
     //Put all division-specific stats in category-specific arrays for division rankings
@@ -123,18 +121,18 @@ Promise.all(promises).then((data) => {
         let divisionStatObject = new statObjectClass();
 
         division.forEach((team) => {
-            divisionStatObject.HR.push(team.stats.HR);
             divisionStatObject.R.push(team.stats.R);
+            divisionStatObject.HR.push(team.stats.HR);
             divisionStatObject.RBI.push(team.stats.RBI);
             divisionStatObject.SB.push(team.stats.SB);
             divisionStatObject.OBP.push(team.stats.OBP);
             divisionStatObject.OPS.push(team.stats.OPS);
-            divisionStatObject.SO.push(team.stats.SO);
-            divisionStatObject.SV.push(team.stats.SV);
-            divisionStatObject.HD.push(team.stats.HD);
+            divisionStatObject.WQS.push(team.stats.WQS);
+            divisionStatObject.K.push(team.stats.K);
+            divisionStatObject.K9.push(team.stats.K9);
+            divisionStatObject.SVHLD.push(team.stats.SVHLD);
             divisionStatObject.ERA.push(team.stats.ERA);
             divisionStatObject.WHP.push(team.stats.WHP);
-            divisionStatObject.QS.push(team.stats.QS);
         });
 
         return divisionStatObject;
@@ -142,7 +140,7 @@ Promise.all(promises).then((data) => {
 
     //Sort arrays used for rankings
     for (const [key, value] of Object.entries(statObject)) {
-        if (key == 'ERA' || key == 'WHP') {
+        if (key == 'ERA' || key == 'WHP') { //lower is better
             statObject[key] = value.sort((a, b) => a - b);
         } else {
             statObject[key] = value.sort((a, b) => b - a);
@@ -152,7 +150,7 @@ Promise.all(promises).then((data) => {
     //Sort all division-specific arrays used for rankings
     allDivisionStats.forEach((division) => {
         for (const [key, value] of Object.entries(division)) {
-            if (key == 'ERA' || key == 'WHP') {
+            if (key == 'ERA' || key == 'WHP') { //lower is better
                 division[key] = value.sort((a, b) => a - b);
             } else {
                 division[key] = value.sort((a, b) => b - a);
@@ -164,18 +162,18 @@ Promise.all(promises).then((data) => {
     const withValues = statsTogether.map((team) => {
         return {
             statValues: {
-                HR: teamCount - statObject.HR.indexOf(team.stats.HR),
                 R: teamCount - statObject.R.indexOf(team.stats.R),
+                HR: teamCount - statObject.HR.indexOf(team.stats.HR),
                 RBI: teamCount - statObject.RBI.indexOf(team.stats.RBI),
                 SB: teamCount - statObject.SB.indexOf(team.stats.SB),
                 OBP: teamCount - statObject.OBP.indexOf(team.stats.OBP),
                 OPS: teamCount - statObject.OPS.indexOf(team.stats.OPS),
-                SO: teamCount - statObject.SO.indexOf(team.stats.SO),
-                SV: teamCount - statObject.SV.indexOf(team.stats.SV),
-                HD: teamCount - statObject.HD.indexOf(team.stats.HD),
+                WQS: teamCount - statObject.WQS.indexOf(team.stats.WQS),
+                K: teamCount - statObject.K.indexOf(team.stats.K),
+                K9: teamCount - statObject.K9.indexOf(team.stats.K9),
+                SVHLD: teamCount - statObject.SVHLD.indexOf(team.stats.SVHLD),
                 ERA: teamCount - statObject.ERA.indexOf(team.stats.ERA),
                 WHP: teamCount - statObject.WHP.indexOf(team.stats.WHP),
-                QS: teamCount - statObject.QS.indexOf(team.stats.QS),
             },
             ...team
         }
@@ -196,18 +194,18 @@ Promise.all(promises).then((data) => {
 
         return {
             divisionValues: {
-                HR: getPointValue('HR'),
                 R: getPointValue('R'),
+                HR: getPointValue('HR'),
                 RBI: getPointValue('RBI'),
                 SB: getPointValue('SB'),
                 OBP: getPointValue('OBP'),
                 OPS: getPointValue('OPS'),
-                SO: getPointValue('SO'),
-                SV: getPointValue('SV'),
-                HD: getPointValue('HD'),
+                WQS: getPointValue('WQS'),
+                K: getPointValue('K'),
+                K9: getPointValue('K9'),
+                SVHLD: getPointValue('SVHLD'),
                 ERA: getPointValue('ERA'),
                 WHP: getPointValue('WHP'),
-                QS: getPointValue('QS')
             },
             ...team
         }

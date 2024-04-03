@@ -339,7 +339,7 @@ export default function EnhancedTable(props: any) {
             OBP: row.stats.OBP,
             OPS: row.stats.OPS,
             WQS: row.stats.WQS,
-            SO: row.stats.SO,
+            K: row.stats.K,
             K9: row.stats.K9,
             SVHLD: row.stats.SVHLD,
             ERA: row.stats.ERA,
@@ -352,7 +352,7 @@ export default function EnhancedTable(props: any) {
             OBPRank: row.statValues.OBP,
             OPSRank: row.statValues.OPS,
             WQSRank: row.statValues.WQS,
-            SORank: row.statValues.SO,
+            KRank: row.statValues.K,
             K9Rank: row.statValues.K9,
             SVHLDRank: row.statValues.SVHLD,
             ERARank: row.statValues.ERA,
@@ -365,7 +365,7 @@ export default function EnhancedTable(props: any) {
             divisionOBPRank: row.divisionValues.OBP,
             divisionOPSRank: row.divisionValues.OPS,
             divisionWQSRank: row.divisionValues.WQS,
-            divisionSORank: row.divisionValues.SO,
+            divisionKRank: row.divisionValues.K,
             divisionK9Rank: row.divisionValues.K9,
             divisionSVHLDRank: row.divisionValues.SVHLD,
             divisionERARank: row.divisionValues.ERA,
@@ -445,7 +445,7 @@ export default function EnhancedTable(props: any) {
                                             selected={isItemSelected}
                                         >
                                             <TableCell component="th" id={labelId} scope="row">
-                                                <Tooltip title={getPromoText(row.promotion)} placement="top">
+                                                {/* <Tooltip title={getPromoText(row.promotion)} placement="top">
                                                     <CircleIcon
                                                         style={{
                                                             color: getPromoColor(row.promotion),
@@ -454,7 +454,7 @@ export default function EnhancedTable(props: any) {
                                                             verticalAlign: "middle",
                                                         }}
                                                     ></CircleIcon>
-                                                </Tooltip>
+                                                </Tooltip> */}
                                                 <a
                                                     target="_blank"
                                                     href={`https://www.fantrax.com/fantasy/league/${row.leagueId}/team/roster;teamId=${row.teamId}`}

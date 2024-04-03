@@ -27,9 +27,9 @@ const d4List = [
     '2xpo8hpflr7y0om1',
 ];
 
-const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
+export const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
 
-const getDivision = ((leagueId) => {
+export const getDivision = ((leagueId) => {
     if (d1List.includes(leagueId)) {
         return 1;
     }
@@ -44,8 +44,3 @@ const getDivision = ((leagueId) => {
 
     return 4;
 });
-
-module.exports = {
-    leagueIds,
-    getDivision
-}
