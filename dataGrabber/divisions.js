@@ -1,37 +1,35 @@
-const d1List = ['fmsw2r2blci8ghpy'];
+const d1List = ['e3px47n0lr7xx2y9'];
 const d2List = [
-    '5u9acbwjlci8gl0h',
-    'e157klkilci8gcwq',
-    '4vg4rvf4lci8goqy',
+    '88ggwnu4lr7xxkg8',
+    '7vlt8wtklr7xxtne',
+    '77en7xmelr7xy3n1',
 ];
 const d3List = [
-    '5i7097l4lci8h8hx',
-    'mlhrcb1hlci8h56s',
-    '26eoxjgblci8gs4q',
-    'ld3pwp1alci8gvdi',
-    '18vv6tuylci8gz06',
-    'qm1f6p3glci8h225',
+    'y6zp4bfslr7xyfbe',
+    'kpc4liy3lr7xyner',
+    'wm8ixb3flr7y4vh5',
+    '838h7q3plr7xz1nt',
+    '24f5ki4tlr7xza1j',
+    'ou1xzkfplr7xzie8',
+    'ls0uwwrqlr7xyuss',
 ];
 const d4List = [
-    '71ffs8fqlci8hbk4',
-    'pdqu6y6glci8heom',
-    'izk0kwpalci8hi7o',
-    'yok9eqt1lci8hl7h',
-    'wel1ffjzlci8holo',
-    'diudb961lci8hrlz',
-    'h9cwytrflci8huvy',
-    'av4hwhyulci8hxw5',
-    '8w86c7mtlci8i12k',
-    'dnl2pkxylci8i4h1',
-    'oisr0gvnlci8i9k3',
-    '6ahuaat5lci8iclu',
-    '25qo4fs9lci8ifok',
-    '7xpvgr5zlci8iitc',
+    '3y3ol2vzlr7xzq5s',
+    'yr8kla9jlr7y38vm',
+    'mb8xviqylr7y2zvv',
+    'd9idp3pzlr7y2p5d',
+    'qnyleexplr7y2dze',
+    'di1qgcmtlr7y2489',
+    'scq69b6xlr7y1suk',
+    'f168202alr7y1egz',
+    'b3xezupjlr7y17rx',
+    'kydzgf8clr7y0zue',
+    '2xpo8hpflr7y0om1',
 ];
 
-const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
+export const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
 
-const getDivision = ((leagueId) => {
+export const getDivision = ((leagueId) => {
     if (d1List.includes(leagueId)) {
         return 1;
     }
@@ -46,8 +44,3 @@ const getDivision = ((leagueId) => {
 
     return 4;
 });
-
-module.exports = {
-    leagueIds,
-    getDivision
-}
