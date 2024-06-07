@@ -39,12 +39,12 @@ Promise.all(promises).then((data) => {
                     SB: Number(team.cells[9].toolTip.replace(/\,/g, '')) || 0,
                     OBP: Number(team.cells[10].toolTip.replace(/\,/g, '')) || 0,
                     OPS: Number(team.cells[11].toolTip.replace(/\,/g, '')) || 0,
-                    WQS: Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0,
-                    K: Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0,
-                    K9: Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0,
-                    SVHLD: Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0,
-                    ERA: Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0,
-                    WHP: Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0,
+                    WQS: Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0,
+                    K: Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0,
+                    K9: Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0,
+                    SVHLD: Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0,
+                    ERA: Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0,
+                    WHP: Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0,
                 },
                 //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
                 // statsHistory: {
