@@ -296,12 +296,12 @@ Promise.all(promises).then((data) => {
         .filter(y => y.division === 3)
         .filter(notPromoted)
         .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 6);
+        .slice(0, 4);
     let d4Bums = promotionStuff
         .filter(y => y.division === 4)
         .filter(notPromoted)
         .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 14);
+        .slice(0, 13);
 
     function yesRelegated(x) {
         return x.promotion == 'relegation';
