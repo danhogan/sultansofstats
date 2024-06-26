@@ -523,7 +523,7 @@ export default function EnhancedTable(props: any) {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
-                                                    label={`${row.K9.toFixed(3)} (${overallBool ? row.K9Rank : row.divisionK9Rank})`}
+                                                    label={`${row.K9.toFixed(2)} (${overallBool ? row.K9Rank : row.divisionK9Rank})`}
                                                     style={getColor(overallBool ? row.K9Rank : row.divisionK9Rank)}
                                                 />
                                             </TableCell>
