@@ -3,6 +3,7 @@ import fs from 'fs';
 
 import file from '../src/allTheData.json' with { type: "json" };
 import { leagueIds, getDivision } from './divisions.js';
+import { categories } from './categories.js';
 
 const doTheDew = async function (leagueId) {
     const body = { msgs: [{ method: "getStandings", data: { leagueId: leagueId } }] };
@@ -32,20 +33,10 @@ Promise.all(promises).then((data) => {
                 leagueId: team.fixedCells[1].leagueId,
                 leagueRank: parseInt(team.fixedCells[0].content), //not sure about this one
                 division: getDivision(team.fixedCells[1].leagueId),
-                stats: {
-                    R: Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0,
-                    HR: Number(team.cells[7].toolTip.replace(/\,/g, '')) || 0,
-                    RBI: Number(team.cells[8].toolTip.replace(/\,/g, '')) || 0,
-                    SB: Number(team.cells[9].toolTip.replace(/\,/g, '')) || 0,
-                    OBP: Number(team.cells[10].toolTip.replace(/\,/g, '')) || 0,
-                    OPS: Number(team.cells[11].toolTip.replace(/\,/g, '')) || 0,
-                    WQS: Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0,
-                    K: Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0,
-                    K9: Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0,
-                    SVHLD: Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0,
-                    ERA: Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0,
-                    WHP: Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0,
-                },
+                stats: categories.reduce((acc, stat) => {
+                    acc[stat.dataName] = Number(team.cells[stat.fantraxCellId].toolTip.replace(/\,/g, '')) || 0;
+                    return acc;
+                }, {})
                 //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
                 // statsHistory: {
                 //     R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0],
@@ -102,18 +93,9 @@ Promise.all(promises).then((data) => {
     //Put all stats in category-specific arrays for ranking
     let statObject = new statObjectClass();
     statsTogether.forEach((team) => {
-        statObject.R.push(team.stats.R);
-        statObject.HR.push(team.stats.HR);
-        statObject.RBI.push(team.stats.RBI);
-        statObject.SB.push(team.stats.SB);
-        statObject.OBP.push(team.stats.OBP);
-        statObject.OPS.push(team.stats.OPS);
-        statObject.WQS.push(team.stats.WQS);
-        statObject.K.push(team.stats.K);
-        statObject.K9.push(team.stats.K9);
-        statObject.SVHLD.push(team.stats.SVHLD);
-        statObject.ERA.push(team.stats.ERA);
-        statObject.WHP.push(team.stats.WHP);
+        categories.forEach((stat) => {
+            statObject[stat.dataName].push(team.stats[stat.dataName])
+        })
     });
 
     //Put all division-specific stats in category-specific arrays for division rankings
@@ -121,18 +103,9 @@ Promise.all(promises).then((data) => {
         let divisionStatObject = new statObjectClass();
 
         division.forEach((team) => {
-            divisionStatObject.R.push(team.stats.R);
-            divisionStatObject.HR.push(team.stats.HR);
-            divisionStatObject.RBI.push(team.stats.RBI);
-            divisionStatObject.SB.push(team.stats.SB);
-            divisionStatObject.OBP.push(team.stats.OBP);
-            divisionStatObject.OPS.push(team.stats.OPS);
-            divisionStatObject.WQS.push(team.stats.WQS);
-            divisionStatObject.K.push(team.stats.K);
-            divisionStatObject.K9.push(team.stats.K9);
-            divisionStatObject.SVHLD.push(team.stats.SVHLD);
-            divisionStatObject.ERA.push(team.stats.ERA);
-            divisionStatObject.WHP.push(team.stats.WHP);
+            categories.forEach((stat) => {
+                divisionStatObject[stat.dataName].push(team.stats[stat.dataName])
+            })
         });
 
         return divisionStatObject;
@@ -161,20 +134,10 @@ Promise.all(promises).then((data) => {
     //Get overall ranking point value for each specific stat
     const withValues = statsTogether.map((team) => {
         return {
-            statValues: {
-                R: teamCount - statObject.R.indexOf(team.stats.R),
-                HR: teamCount - statObject.HR.indexOf(team.stats.HR),
-                RBI: teamCount - statObject.RBI.indexOf(team.stats.RBI),
-                SB: teamCount - statObject.SB.indexOf(team.stats.SB),
-                OBP: teamCount - statObject.OBP.indexOf(team.stats.OBP),
-                OPS: teamCount - statObject.OPS.indexOf(team.stats.OPS),
-                WQS: teamCount - statObject.WQS.indexOf(team.stats.WQS),
-                K: teamCount - statObject.K.indexOf(team.stats.K),
-                K9: teamCount - statObject.K9.indexOf(team.stats.K9),
-                SVHLD: teamCount - statObject.SVHLD.indexOf(team.stats.SVHLD),
-                ERA: teamCount - statObject.ERA.indexOf(team.stats.ERA),
-                WHP: teamCount - statObject.WHP.indexOf(team.stats.WHP),
-            },
+            statValues: categories.reduce((acc, stat) => {
+                acc[stat.dataName] = teamCount - statObject[stat.dataName].indexOf(team.stats[stat.dataName]);
+                return acc;
+            }, {}),
             ...team
         }
     });
@@ -193,20 +156,10 @@ Promise.all(promises).then((data) => {
         }
 
         return {
-            divisionValues: {
-                R: getPointValue('R'),
-                HR: getPointValue('HR'),
-                RBI: getPointValue('RBI'),
-                SB: getPointValue('SB'),
-                OBP: getPointValue('OBP'),
-                OPS: getPointValue('OPS'),
-                WQS: getPointValue('WQS'),
-                K: getPointValue('K'),
-                K9: getPointValue('K9'),
-                SVHLD: getPointValue('SVHLD'),
-                ERA: getPointValue('ERA'),
-                WHP: getPointValue('WHP'),
-            },
+            divisionValues: categories.reduce((acc, stat) => {
+                acc[stat.dataName] = getPointValue(stat.dataName);
+                return acc;
+            }, {}),
             ...team
         }
     });
