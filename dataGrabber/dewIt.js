@@ -30,7 +30,7 @@ Promise.all(promises).then((data) => {
                 teamId: team.fixedCells[1].teamId,
                 leagueName: league.responses[0].data.miscData.heading,
                 leagueId: team.fixedCells[1].leagueId,
-                leagueRank: team.fixedCells[0].content, //not sure about this one
+                leagueRank: parseInt(team.fixedCells[0].content), //not sure about this one
                 division: getDivision(team.fixedCells[1].leagueId),
                 stats: {
                     R: Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0,
