@@ -445,7 +445,7 @@ export default function EnhancedTable(props: any) {
                                             selected={isItemSelected}
                                         >
                                             <TableCell component="th" id={labelId} scope="row">
-                                                <Tooltip title={getPromoText(row.promotion)} placement="top">
+                                                {/* <Tooltip title={getPromoText(row.promotion)} placement="top">
                                                     <CircleIcon
                                                         style={{
                                                             color: getPromoColor(row.promotion),
@@ -454,7 +454,7 @@ export default function EnhancedTable(props: any) {
                                                             verticalAlign: "middle",
                                                         }}
                                                     ></CircleIcon>
-                                                </Tooltip>
+                                                </Tooltip> */}
                                                 <a
                                                     target="_blank"
                                                     href={`https://www.fantrax.com/fantasy/league/${row.leagueId}/team/roster;teamId=${row.teamId}`}
