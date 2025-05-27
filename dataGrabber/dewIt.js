@@ -254,7 +254,7 @@ Promise.all(promises).then((data) => {
         .filter(y => y.division === 4)
         .filter(notPromoted)
         .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 13);
+        .slice(0, 15);
 
     function yesRelegated(x) {
         return x.promotion == 'relegation';
