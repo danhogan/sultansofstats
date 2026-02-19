@@ -1,53 +1,48 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	let menuOpen = $state(false);
 
-	const pages = [
+	const navLinks = [
 		{ label: 'Home', href: '/' },
 		{ label: 'Leaderboard', href: '/leaderboard' },
-		{ label: 'Charts', href: '/charts' }
+		{ label: 'Charts', href: '/charts' },
 	];
 
-	function toggleMenu() {
-		menuOpen = !menuOpen;
-	}
-
-	function closeMenu() {
-		menuOpen = false;
-	}
+	function toggleMenu() { menuOpen = !menuOpen; }
+	function closeMenu() { menuOpen = false; }
 </script>
 
 <header>
-	<div class="toolbar">
-		<!-- Desktop logo -->
-		<a href="/" class="main-logo desktop-logo">
-			<img src="/images/sos.jpg" alt="Sultans of Stats logo" />
+	<div class="inner">
+		<a href="/" class="logo" onclick={closeMenu}>
+			<img src="/images/sos.jpg" alt="Sultans of Stats" />
 		</a>
 
-		<!-- Mobile hamburger -->
-		<button class="hamburger" onclick={toggleMenu} aria-label="Toggle navigation menu">
+		<nav class="desktop-nav">
+			{#each navLinks as link}
+				<a
+					href={link.href}
+					class:active={$page.url.pathname === link.href}
+				>{link.label}</a>
+			{/each}
+		</nav>
+
+		<button class="hamburger" onclick={toggleMenu} aria-label="Toggle menu" aria-expanded={menuOpen}>
 			<span></span>
 			<span></span>
 			<span></span>
 		</button>
-
-		<!-- Mobile logo (center) -->
-		<a href="/" class="main-logo mobile-logo">
-			<img src="/images/sos.jpg" alt="Sultans of Stats logo" />
-		</a>
-
-		<!-- Desktop nav -->
-		<nav class="desktop-nav">
-			{#each pages as page}
-				<a href={page.href}>{page.label}</a>
-			{/each}
-		</nav>
 	</div>
 
-	<!-- Mobile dropdown -->
 	{#if menuOpen}
 		<nav class="mobile-nav">
-			{#each pages as page}
-				<a href={page.href} onclick={closeMenu}>{page.label}</a>
+			{#each navLinks as link}
+				<a
+					href={link.href}
+					class:active={$page.url.pathname === link.href}
+					onclick={closeMenu}
+				>{link.label}</a>
 			{/each}
 		</nav>
 	{/if}
@@ -55,104 +50,108 @@
 
 <style>
 	header {
-		background-color: var(--color-primary);
-		color: #fff;
 		position: sticky;
 		top: 0;
 		z-index: 100;
+		background: rgba(14, 14, 14, 0.9);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 	}
 
-	.toolbar {
+	.inner {
 		display: flex;
 		align-items: center;
-		padding: 0 1em;
-		min-height: 56px;
+		justify-content: space-between;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5em;
+		height: 44px;
 	}
 
-	.desktop-logo {
-		margin-right: 1em;
-		flex-shrink: 0;
+	/* ── Logo ─────────────────────────────────── */
+
+	.logo img {
+		height: 26px;
+		width: auto;
+		display: block;
 	}
 
-	.mobile-logo {
-		display: none;
+	/* ── Desktop nav ──────────────────────────── */
+
+	.desktop-nav {
+		display: flex;
+		align-items: center;
+		gap: 0.25em;
 	}
+
+	.desktop-nav a {
+		color: var(--text-secondary);
+		text-decoration: none;
+		font-size: 0.875rem;
+		font-weight: 500;
+		padding: 0.3em 0.75em;
+		border-bottom: 1.5px solid transparent;
+		transition: color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.desktop-nav a:hover,
+	.desktop-nav a.active {
+		color: #fff;
+		border-bottom-color: var(--color-primary);
+	}
+
+	/* ── Hamburger ────────────────────────────── */
 
 	.hamburger {
 		display: none;
 		flex-direction: column;
+		justify-content: center;
 		gap: 5px;
 		background: none;
 		border: none;
 		cursor: pointer;
-		padding: 8px;
-		margin-right: 0.5em;
-		flex-shrink: 0;
+		padding: 6px;
+		color: var(--text-secondary);
+		transition: color 0.15s;
 	}
+
+	.hamburger:hover { color: #fff; }
 
 	.hamburger span {
 		display: block;
-		width: 24px;
-		height: 2px;
-		background-color: #fff;
+		width: 20px;
+		height: 1.5px;
+		background: currentColor;
 	}
 
-	.desktop-nav {
-		display: flex;
-		gap: 0.5em;
-		align-items: center;
-	}
-
-	.desktop-nav a,
-	.mobile-nav a {
-		color: #fff;
-		text-decoration: none;
-		padding: 0.5em 1em;
-		border-radius: 4px;
-		font-size: 0.9rem;
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.desktop-nav a:hover,
-	.mobile-nav a:hover {
-		background-color: rgba(255, 255, 255, 0.15);
-	}
+	/* ── Mobile nav ───────────────────────────── */
 
 	.mobile-nav {
 		display: flex;
 		flex-direction: column;
-		background-color: var(--color-primary);
-		padding: 0.5em 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.2);
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		padding: 0.4em 0;
 	}
 
 	.mobile-nav a {
+		color: var(--text-secondary);
+		text-decoration: none;
+		font-size: 0.875rem;
+		font-weight: 500;
 		padding: 0.75em 1.5em;
+		transition: color 0.15s ease;
 	}
 
-	/* Main logo image sizing */
-	:global(.main-logo img) {
-		max-height: 3em;
-		aspect-ratio: 150 / 143;
-		display: block;
+	.mobile-nav a:hover,
+	.mobile-nav a.active {
+		color: #fff;
 	}
 
-	@media (max-width: 768px) {
-		.desktop-logo {
-			display: none;
-		}
-		.desktop-nav {
-			display: none;
-		}
-		.hamburger {
-			display: flex;
-		}
-		.mobile-logo {
-			display: block;
-			flex-grow: 1;
-			text-align: center;
-		}
+	/* ── Responsive ───────────────────────────── */
+
+	@media (max-width: 640px) {
+		.desktop-nav { display: none; }
+		.hamburger { display: flex; }
 	}
 </style>

@@ -1,308 +1,211 @@
 import fetch from "node-fetch";
 import fs from 'fs';
 
-import file from '../src/allTheData.json' with { type: "json" };
 import { leagueIds, getDivision } from './divisions.js';
 import { categories } from './categories.js';
 
-const doTheDew = async function (leagueId) {
-    const body = { msgs: [{ method: "getStandings", data: { leagueId: leagueId } }] };
+const LOWER_IS_BETTER = new Set(['ERA', 'WHP']);
+const OUTPUT_PATH = '../src/lib/data/allTheData.json';
+const TIE_PENALTY = 0.5;
 
-    //https://www.fantrax.com/fantasy/league/rdjea3rslck02h24/standings
-    const response = await fetch(`https://www.fantrax.com/fxpa/req?leagueId=${leagueId}`, {
-        method: 'post',
-        body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' }
+// All per-division config in one place.
+// superDivisionRank:    teams at or above this division rank earn "super" promotion (skip a division).
+// promotionLeagueRank:  teams at or above this league rank earn normal promotion.
+// relegationLeagueRank: teams at or below this league rank are relegated.
+// crossDivSlots:        extra promotion slots opened in this division by super-promotions above.
+const DIVISION_CONFIG = {
+    1: { relegationLeagueRank: 7 },
+    2: { promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 3 },
+    3: { superDivisionRank: 1, promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 4 },
+    4: { superDivisionRank: 2, promotionLeagueRank: 2, crossDivSlots: 15 },
+};
+
+const DIVISION_IDS = Object.keys(DIVISION_CONFIG).map(Number);
+
+// --- Fantrax API ---
+
+async function fetchLeagueStandings(leagueId) {
+    const res = await fetch(`https://www.fantrax.com/fxpa/req?leagueId=${leagueId}`, {
+        method: 'POST',
+        body: JSON.stringify({ msgs: [{ method: 'getStandings', data: { leagueId } }] }),
+        headers: { 'Content-Type': 'application/json' },
     });
-    return await response.json();
+    return res.json();
 }
 
-//Get all league data
-const promises = leagueIds.map((leagueId) => {
-    return doTheDew(leagueId);
-});
+function parseLeagueTeams(leagueResponse) {
+    const data = leagueResponse.responses[0].data;
+    const leagueName = data.miscData.heading;
 
-Promise.all(promises).then((data) => {
-    //Format league data that we will need
-    const allStats = data.map((league) => {
-        return league.responses[0].data.tableList[3].rows.map((team) => {
-            return {
-                teamName: team.fixedCells[1].content,
-                teamId: team.fixedCells[1].teamId,
-                leagueName: league.responses[0].data.miscData.heading,
-                leagueId: team.fixedCells[1].leagueId,
-                leagueRank: parseInt(team.fixedCells[0].content), //not sure about this one
-                division: getDivision(team.fixedCells[1].leagueId),
-                stats: categories.reduce((acc, stat) => {
-                    acc[stat.dataName] = Number(team.cells[stat.fantraxCellId].toolTip.replace(/\,/g, '')) || 0;
-                    return acc;
-                }, {})
-                //rework for first and second day of season. Day 1 - no statsHistory, Day 2 - statsHistory doesn't exist yet, then we're good
-                // statsHistory: {
-                //     R: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.R, Number(team.cells[6].toolTip.replace(/\,/g, '')) || 0],
-                //     HR: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.HR, Number(team.cells[7].toolTip.replace(/\,/g, '')) || 0],
-                //     RBI: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.RBI, Number(team.cells[8].toolTip.replace(/\,/g, '')) || 0],
-                //     SB: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SB, Number(team.cells[9].toolTip.replace(/\,/g, '')) || 0],
-                //     OBP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OBP, Number(team.cells[10].toolTip.replace(/\,/g, '')) || 0],
-                //     OPS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.OPS, Number(team.cells[11].toolTip.replace(/\,/g, '')) || 0],
-                //     WQS: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WQS, Number(team.cells[13].toolTip.replace(/\,/g, '')) || 0],
-                //     K: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.K, Number(team.cells[14].toolTip.replace(/\,/g, '')) || 0],
-                //     K9: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.K9, Number(team.cells[16].toolTip.replace(/\,/g, '')) || 0],
-                //     SVHLD: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.SVHLD, Number(team.cells[15].toolTip.replace(/\,/g, '')) || 0],
-                //     ERA: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.ERA, Number(team.cells[17].toolTip.replace(/\,/g, '')) || 0],
-                //     WHP: [...file.theData.filter(x => x.teamId == team.fixedCells[1].teamId)[0].statsHistory.WHP, Number(team.cells[18].toolTip.replace(/\,/g, '')) || 0],
-                // }
-            }
-        });
+    return data.tableList[3].rows.map((team) => {
+        const leagueId = team.fixedCells[1].leagueId;
+        return {
+            teamName: team.fixedCells[1].content,
+            teamId: team.fixedCells[1].teamId,
+            leagueName,
+            leagueId,
+            leagueRank: Number(team.fixedCells[0].content),
+            division: getDivision(leagueId),
+            stats: Object.fromEntries(
+                categories.map((cat) => [
+                    cat.dataName,
+                    Number(team.cells[cat.fantraxCellId].toolTip.replace(/,/g, '')) || 0,
+                ])
+            ),
+        };
     });
+}
 
-    //Merge all leagues to same array
-    const statsTogether = [].concat(...allStats);
+// --- Ranking ---
 
-    const teamCount = statsTogether.length;
-    const divisionCounts = [
-        statsTogether.filter(x => x.division == 1).length,
-        statsTogether.filter(x => x.division == 2).length,
-        statsTogether.filter(x => x.division == 3).length,
-        statsTogether.filter(x => x.division == 4).length,
-    ];
-    const divisionStats = [
-        statsTogether.filter(x => x.division == 1),
-        statsTogether.filter(x => x.division == 2),
-        statsTogether.filter(x => x.division == 3),
-        statsTogether.filter(x => x.division == 4),
-    ];
+// Builds { R: [sorted values], HR: [...], ... } for a set of teams.
+// Values are sorted best-first, so indexOf(value) gives the 0-based rank.
+function buildSortedStatArrays(teams) {
+    const arrays = Object.fromEntries(categories.map((cat) => [cat.dataName, []]));
 
-    class statObjectClass {
-        constructor() {
-            this.R = [];
-            this.HR = [];
-            this.RBI = [];
-            this.SB = [];
-            this.OBP = [];
-            this.OPS = [];
-            this.WQS = [];
-            this.K = [];
-            this.K9 = [];
-            this.SVHLD = [];
-            this.ERA = [];
-            this.WHP = [];
+    for (const team of teams) {
+        for (const cat of categories) {
+            arrays[cat.dataName].push(team.stats[cat.dataName]);
         }
     }
 
-    //Put all stats in category-specific arrays for ranking
-    let statObject = new statObjectClass();
-    statsTogether.forEach((team) => {
-        categories.forEach((stat) => {
-            statObject[stat.dataName].push(team.stats[stat.dataName])
-        })
-    });
-
-    //Put all division-specific stats in category-specific arrays for division rankings
-    let allDivisionStats = divisionStats.map((division) => {
-        let divisionStatObject = new statObjectClass();
-
-        division.forEach((team) => {
-            categories.forEach((stat) => {
-                divisionStatObject[stat.dataName].push(team.stats[stat.dataName])
-            })
-        });
-
-        return divisionStatObject;
-    });
-
-    //Sort arrays used for rankings
-    for (const [key, value] of Object.entries(statObject)) {
-        if (key == 'ERA' || key == 'WHP') { //lower is better
-            statObject[key] = value.sort((a, b) => a - b);
-        } else {
-            statObject[key] = value.sort((a, b) => b - a);
-        }
+    for (const cat of categories) {
+        const key = cat.dataName;
+        arrays[key].sort(LOWER_IS_BETTER.has(key) ? (a, b) => a - b : (a, b) => b - a);
     }
 
-    //Sort all division-specific arrays used for rankings
-    allDivisionStats.forEach((division) => {
-        for (const [key, value] of Object.entries(division)) {
-            if (key == 'ERA' || key == 'WHP') { //lower is better
-                division[key] = value.sort((a, b) => a - b);
-            } else {
-                division[key] = value.sort((a, b) => b - a);
-            }
-        }
-    });
+    return arrays;
+}
 
-    //Get overall ranking point value for each specific stat
-    const withValues = statsTogether.map((team) => {
-        return {
-            statValues: categories.reduce((acc, stat) => {
-                acc[stat.dataName] = teamCount - statObject[stat.dataName].indexOf(team.stats[stat.dataName]);
-                return acc;
-            }, {}),
-            ...team
-        }
-    });
+// Points for a stat value: total count minus its 0-based rank.
+// Division scoring penalizes ties by TIE_PENALTY per duplicate beyond the first.
+function calcPoints(value, sortedValues, total, penalizeTies = false) {
+    const points = total - sortedValues.indexOf(value);
+    if (!penalizeTies) return points;
+    const ties = sortedValues.filter((v) => v === value).length;
+    return points + (ties - 1) * -TIE_PENALTY;
+}
 
-    //Get division-specific ranking point value for each specific stat
-    const divisionValues = withValues.map((team) => {
-        let localDivisionCount = divisionCounts[team.division - 1];
-        let divisionStats = allDivisionStats[team.division - 1];
+function addStatPoints(teams) {
+    const overallSorted = buildSortedStatArrays(teams);
+    const byDivision = DIVISION_IDS.map((d) => teams.filter((t) => t.division === d));
+    const divisionSorted = byDivision.map(buildSortedStatArrays);
+    const divisionCounts = byDivision.map((d) => d.length);
 
-        const getPointValue = (statCat) => {
-            let bonus = 0;
-            let timesValueIsInArray = divisionStats[statCat].filter(x => x == team.stats[statCat]).length;
-            bonus = (timesValueIsInArray - 1) * -0.5; //adjust points for categorical ties
+    return teams.map((team) => {
+        const divIdx = team.division - 1;
+        const divSorted = divisionSorted[divIdx];
+        const divTotal = divisionCounts[divIdx];
 
-            return localDivisionCount - divisionStats[statCat].indexOf(team.stats[statCat]) + bonus;
-        }
+        const statValues = Object.fromEntries(
+            categories.map((cat) => [
+                cat.dataName,
+                calcPoints(team.stats[cat.dataName], overallSorted[cat.dataName], teams.length),
+            ])
+        );
 
-        return {
-            divisionValues: categories.reduce((acc, stat) => {
-                acc[stat.dataName] = getPointValue(stat.dataName);
-                return acc;
-            }, {}),
-            ...team
-        }
-    });
-
-    //Calculate/add overall and division point totals
-    const withTotal = divisionValues.map((team) => {
-        return {
-            ...team,
-            totalPoints: Object.values(team.statValues).reduce((a, b) => a + b),
-            divisionPoints: Object.values(team.divisionValues).reduce((a, b) => a + b),
-        }
-    });
-
-    const sortedByTotalPoints = [...withTotal].sort((a, b) => (a.totalPoints < b.totalPoints) ? 1 : -1);
-    const sortedByDivisionPoints = [...withTotal].sort((a, b) => (a.divisionPoints < b.divisionPoints) ? 1 : -1);
-
-    //Calculate/add overall and division rankings based on point totals
-    const withOverallRanking = sortedByTotalPoints.map((team) => {
-        return {
-            ...team,
-            overallRank: sortedByTotalPoints.findIndex(x => x.totalPoints === team.totalPoints) + 1,
-            divisionRank: sortedByDivisionPoints.filter(y => y.division === team.division).findIndex(x => x.divisionPoints === team.divisionPoints) + 1
-        }
-    });
-
-    //wow this promotion stuff is bad
-    let promotionStuff = withOverallRanking.map((team) => {
-        let promo = '';
-
-        if (team.division === 1 && team.leagueRank >= 7) {
-            promo = 'relegation';
-        }
-
-        if (team.division === 2) {
-            if (team.leagueRank <= 2) {
-                promo = 'promotion';
-            }
-
-            if (team.leagueRank >= 8) {
-                promo = 'relegation';
-            }
-        }
-
-        if (team.division === 3) {
-            if (team.leagueRank <= 2) {
-                promo = 'promotion';
-            }
-
-            if (team.leagueRank >= 8) {
-                promo = 'relegation';
-            }
-
-            if (team.divisionRank === 1) {
-                promo = 'super';
-            }
-        }
-
-        if (team.division === 4) {
-            if (team.leagueRank <= 2) {
-                promo = 'promotion';
-            }
-
-            if (team.divisionRank <= 2) {
-                promo = 'super';
-            }
-        }
-
-        return {
-            teamId: team.teamId,
-            overallRank: team.overallRank,
-            divisionRank: team.divisionRank,
-            division: team.division,
-            promotion: promo
-        }
-    });
-
-    function notPromoted(x) {
-        return x.promotion != 'promotion' && x.promotion != 'super';
-    }
-
-    let d2Bums = promotionStuff
-        .filter(y => y.division === 2)
-        .filter(notPromoted)
-        .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 3);
-    let d3Bums = promotionStuff
-        .filter(y => y.division === 3)
-        .filter(notPromoted)
-        .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 4);
-    let d4Bums = promotionStuff
-        .filter(y => y.division === 4)
-        .filter(notPromoted)
-        .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 15);
-
-    function yesRelegated(x) {
-        return x.promotion == 'relegation';
-    }
-
-    let d2SuperBums = promotionStuff
-        .filter(y => y.division === 2)
-        .filter(yesRelegated)
-        .sort((a, b) => (a.divisionRank > b.divisionRank) ? 1 : -1)
-        .slice(0, 1);
-
-    const morePromotionStuff = withOverallRanking.map((team) => {
-        let promo = promotionStuff.filter(x => x.teamId == team.teamId)[0].promotion;
-
-        d2Bums.forEach((bum) => {
-            if (bum.teamId == team.teamId) {
-                promo = 'promotion';
-            }
-        });
-
-        d2SuperBums.forEach((bum) => {
-            if (bum.teamId == team.teamId) {
-                promo = '';
-            }
-        });
-
-        d3Bums.forEach((bum) => {
-            if (bum.teamId == team.teamId) {
-                promo = 'promotion';
-            }
-        });
-
-        d4Bums.forEach((bum) => {
-            if (bum.teamId == team.teamId) {
-                promo = 'promotion';
-            }
-        });
+        const divisionValues = Object.fromEntries(
+            categories.map((cat) => [
+                cat.dataName,
+                calcPoints(team.stats[cat.dataName], divSorted[cat.dataName], divTotal, true),
+            ])
+        );
 
         return {
             ...team,
-            promotion: promo
-        }
+            statValues,
+            divisionValues,
+            totalPoints: Object.values(statValues).reduce((a, b) => a + b, 0),
+            divisionPoints: Object.values(divisionValues).reduce((a, b) => a + b, 0),
+        };
     });
+}
 
-    const withDate = {
-        theData: morePromotionStuff,
-        updateDate: Date.now()
-    }
+function addRankings(teams) {
+    const byTotal = [...teams].sort((a, b) => b.totalPoints - a.totalPoints);
+    const byDivision = [...teams].sort((a, b) => b.divisionPoints - a.divisionPoints);
 
-    fs.writeFileSync(`../src/allTheData.json`, JSON.stringify(withDate));
-});
+    return teams.map((team) => ({
+        ...team,
+        overallRank: byTotal.findIndex((t) => t.totalPoints === team.totalPoints) + 1,
+        divisionRank:
+            byDivision
+                .filter((t) => t.division === team.division)
+                .findIndex((t) => t.divisionPoints === team.divisionPoints) + 1,
+    }));
+}
+
+// --- Promotion / relegation ---
+
+// First pass: determine promotion status from each team's own standing.
+// "super" = skip a division (D3 #1 overall goes to D1, D4 top 2 overall go to D2).
+// super overrides any league-rank-based result for D3/D4.
+function getInitialPromotion({ division, leagueRank, divisionRank }) {
+    const rules = DIVISION_CONFIG[division];
+    if (rules.superDivisionRank !== undefined && divisionRank <= rules.superDivisionRank) return 'super';
+    if (rules.promotionLeagueRank !== undefined && leagueRank <= rules.promotionLeagueRank) return 'promotion';
+    if (rules.relegationLeagueRank !== undefined && leagueRank >= rules.relegationLeagueRank) return 'relegation';
+    return '';
+}
+
+// Returns a Set of teamIds for the best N non-promoted teams in a division.
+function bestNonPromotedIds(teams, division, n) {
+    return new Set(
+        teams
+            .filter((t) => t.division === division && t.promotion !== 'promotion' && t.promotion !== 'super')
+            .sort((a, b) => a.divisionRank - b.divisionRank)
+            .slice(0, n)
+            .map((t) => t.teamId)
+    );
+}
+
+function addPromotion(teams) {
+    // First pass: status based on each team's own standing.
+    const withInitialPromo = teams.map((team) => ({
+        ...team,
+        promotion: getInitialPromotion(team),
+    }));
+
+    // Second pass: cross-division promotions.
+    // Super-promotions open up extra slots in the divisions below, letting additional
+    // non-promoting teams earn promotion. The best relegated D2 team is also un-relegated,
+    // since the D3 super-promotee fills what would have been their D1 relegation slot.
+    const crossDivPromotions = new Set(
+        Object.entries(DIVISION_CONFIG)
+            .filter(([, { crossDivSlots }]) => crossDivSlots)
+            .flatMap(([div, { crossDivSlots }]) =>
+                [...bestNonPromotedIds(withInitialPromo, Number(div), crossDivSlots)]
+            )
+    );
+
+    const bestRelegatedD2Id = withInitialPromo
+        .filter((t) => t.division === 2 && t.promotion === 'relegation')
+        .sort((a, b) => a.divisionRank - b.divisionRank)[0]?.teamId;
+
+    return withInitialPromo.map((team) => {
+        let promotion = team.promotion;
+        if (crossDivPromotions.has(team.teamId)) promotion = 'promotion';
+        if (team.teamId === bestRelegatedD2Id) promotion = '';
+        return { ...team, promotion };
+    });
+}
+
+// --- Main ---
+
+try {
+    const leagueResponses = await Promise.all(leagueIds.map(fetchLeagueStandings));
+    const teams = leagueResponses.flatMap(parseLeagueTeams);
+    const withPoints = addStatPoints(teams);
+    const withRankings = addRankings(withPoints);
+    const withPromotion = addPromotion(withRankings);
+
+    fs.writeFileSync(OUTPUT_PATH, JSON.stringify({
+        theData: withPromotion,
+        updateDate: Date.now(),
+    }));
+
+    console.log(`Updated ${withPromotion.length} teams → ${OUTPUT_PATH}`);
+} catch (err) {
+    console.error('Failed to update data:', err);
+    process.exit(1);
+}

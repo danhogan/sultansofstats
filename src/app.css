@@ -80,13 +80,6 @@ a {
 	background-clip: text;
 }
 
-/* ─── Logo ───────────────────────────────────────────────────── */
-.main-logo img {
-	max-height: 3em;
-	aspect-ratio: 150 / 143;
-	display: block;
-}
-
 /* ─── Layout helpers ─────────────────────────────────────────── */
 .board-container {
 	margin-top: 1em;
