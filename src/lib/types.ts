@@ -56,4 +56,5 @@ export interface HeadCell {
 	id: keyof Data;
 	label: string;
 	numeric: boolean;
+	center?: boolean;
 }

@@ -4,11 +4,11 @@
 	let selected = $state(0);
 
 	const options = [
-		{ value: 0, label: 'All' },
-		{ value: 1, label: 'D1' },
-		{ value: 2, label: 'D2' },
-		{ value: 3, label: 'D3' },
-		{ value: 4, label: 'D4' }
+		{ value: 0, label: 'All', color: '#ed4b25' },
+		{ value: 1, label: 'D1',  color: '#eab308' },
+		{ value: 2, label: 'D2',  color: '#a78bfa' },
+		{ value: 3, label: 'D3',  color: '#38bdf8' },
+		{ value: 4, label: 'D4',  color: '#9ca3af' },
 	];
 
 	function select(value: number) {
@@ -21,6 +21,7 @@
 	{#each options as opt}
 		<button
 			class:active={selected === opt.value}
+			style="--c:{opt.color}"
 			onclick={() => select(opt.value)}
 			aria-pressed={selected === opt.value}
 		>
@@ -32,35 +33,33 @@
 <style>
 	.toggle-group {
 		display: flex;
-		border: 1px solid rgba(255, 255, 255, 0.3);
-		border-radius: 4px;
-		overflow: hidden;
+		gap: 6px;
 	}
 
 	button {
 		background: none;
-		border: none;
-		border-right: 1px solid rgba(255, 255, 255, 0.3);
-		color: var(--text-primary);
+		border: 1.5px solid color-mix(in srgb, var(--c) 38%, transparent);
+		border-radius: 999px;
+		color: var(--text-secondary);
 		cursor: pointer;
-		padding: 6px 16px;
-		font-size: 0.875rem;
-		font-weight: 500;
+		padding: 5px 14px;
+		font-size: 0.78rem;
+		font-weight: 600;
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		transition: background-color 0.15s;
+		letter-spacing: 0.06em;
+		transition: background 0.15s, border-color 0.15s, color 0.15s;
+		white-space: nowrap;
 	}
 
-	button:last-child {
-		border-right: none;
-	}
-
-	button:hover {
-		background-color: rgba(255, 255, 255, 0.1);
+	button:hover:not(.active) {
+		background: color-mix(in srgb, var(--c) 10%, transparent);
+		border-color: color-mix(in srgb, var(--c) 65%, transparent);
+		color: #fff;
 	}
 
 	button.active {
-		background-color: var(--color-secondary);
-		color: #fff;
+		background: color-mix(in srgb, var(--c) 20%, transparent);
+		border-color: var(--c);
+		color: var(--c);
 	}
 </style>

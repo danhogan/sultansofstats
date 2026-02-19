@@ -9,3 +9,9 @@
 <main>
 	{@render children()}
 </main>
+
+<style>
+	main {
+		padding-top: 1.5rem;
+	}
+</style>

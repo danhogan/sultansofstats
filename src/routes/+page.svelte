@@ -1,9 +1,12 @@
+<svelte:head>
+	<title>Sultans of Stats</title>
+</svelte:head>
+
 <script lang="ts">
 	import jsonData from '$lib/data/allTheData.json';
 
 	const teamCount = jsonData.theData.length;
 	const leagueCount = new Set(jsonData.theData.map((t: any) => t.leagueId)).size;
-
 </script>
 
 <div class="home">
@@ -58,7 +61,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 3em 1em 4em;
+		padding: 1.5em 1em 4em;
 		max-width: 860px;
 		margin: 0 auto;
 	}

@@ -16,7 +16,7 @@
 <header>
 	<div class="inner">
 		<a href="/" class="logo" onclick={closeMenu}>
-			<img src="/images/sos.jpg" alt="Sultans of Stats" />
+			<span class="logo-text sos-gradient">Sultans of Stats</span>
 		</a>
 
 		<nav class="desktop-nav">
@@ -71,10 +71,26 @@
 
 	/* ── Logo ─────────────────────────────────── */
 
-	.logo img {
-		height: 26px;
-		width: auto;
-		display: block;
+	.logo {
+		text-decoration: none;
+	}
+
+	.logo-text {
+		font-family: 'Dela Gothic One', sans-serif;
+		font-size: 1rem;
+		font-weight: normal;
+		white-space: nowrap;
+		background-size: 250% auto;
+		background-position: 0% center;
+	}
+
+	.logo:hover .logo-text {
+		animation: logo-sweep 0.8s ease forwards;
+	}
+
+	@keyframes logo-sweep {
+		from { background-position: 0% center; }
+		to   { background-position: 200% center; }
 	}
 
 	/* ── Desktop nav ──────────────────────────── */
