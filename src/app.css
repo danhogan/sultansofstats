@@ -1,0 +1,121 @@
+/* ─── Fonts ──────────────────────────────────────────────────── */
+@font-face {
+	font-family: 'Dela Gothic One';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/dela-gothic-one-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+	--color-primary: #ed4b25;
+	--color-secondary: #336597;
+	--bg-dark: #121212;
+	--bg-paper: #1e1e1e;
+	--text-primary: #ffffff;
+	--text-secondary: #bbbbbb;
+	--link-color: #608bb5;
+
+	/* Heat-map chip colors (matching MUI palette) */
+	--heat-1-bg: #b71c1c; /* red[900] */
+	--heat-2-bg: #d32f2f; /* red[700] */
+	--heat-3-bg: #f44336; /* red[500] */
+	--heat-4-bg: #fb8c00; /* orange[600] */
+	--heat-5-bg: #f9a825; /* yellow[700] */
+	--heat-6-bg: #81c784; /* green[300] */
+	--heat-7-bg: #4caf50; /* green[500] */
+
+	--heat-1-color: #fff;
+	--heat-2-color: #fff;
+	--heat-3-color: #fff;
+	--heat-4-color: #000;
+	--heat-5-color: #000;
+	--heat-6-color: #000;
+	--heat-7-color: #000;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-dark);
+	color: var(--text-primary);
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-size: 16px;
+}
+
+a {
+	color: var(--link-color);
+}
+
+/* ─── Gradient heading ───────────────────────────────────────── */
+/* https://www.joshwcomeau.com/gradient-generator?colors=ed4b25|336597&angle=150&colorMode=hsv&precision=20&easingCurve=0.333|1|0.666|0 */
+.sos-gradient {
+	background-image: linear-gradient(
+		150deg,
+		hsl(11deg 85% 54%) 0%,
+		hsl(4deg 83% 53%) 13%,
+		hsl(356deg 81% 52%) 19%,
+		hsl(348deg 80% 52%) 24%,
+		hsl(341deg 78% 51%) 28%,
+		hsl(333deg 76% 50%) 32%,
+		hsl(325deg 75% 50%) 35%,
+		hsl(317deg 73% 49%) 39%,
+		hsl(310deg 72% 48%) 42%,
+		hsl(302deg 70% 48%) 45%,
+		hsl(294deg 68% 47%) 48%,
+		hsl(287deg 66% 46%) 52%,
+		hsl(279deg 65% 46%) 55%,
+		hsl(271deg 63% 45%) 58%,
+		hsl(264deg 61% 44%) 61%,
+		hsl(256deg 60% 44%) 65%,
+		hsl(249deg 58% 43%) 68%,
+		hsl(241deg 56% 42%) 72%,
+		hsl(233deg 55% 42%) 76%,
+		hsl(225deg 53% 41%) 81%,
+		hsl(218deg 51% 40%) 87%,
+		hsl(210deg 50% 40%) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* ─── Layout helpers ─────────────────────────────────────────── */
+.board-container {
+	max-width: 100%;
+	padding: 0 1rem;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+/* ─── Heat chips ─────────────────────────────────────────────── */
+.chip {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 16px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.heat-1 { background-color: var(--heat-1-bg); color: var(--heat-1-color); }
+.heat-2 { background-color: var(--heat-2-bg); color: var(--heat-2-color); }
+.heat-3 { background-color: var(--heat-3-bg); color: var(--heat-3-color); }
+.heat-4 { background-color: var(--heat-4-bg); color: var(--heat-4-color); }
+.heat-5 { background-color: var(--heat-5-bg); color: var(--heat-5-color); }
+.heat-6 { background-color: var(--heat-6-bg); color: var(--heat-6-color); }
+.heat-7 { background-color: var(--heat-7-bg); color: var(--heat-7-color); }
