@@ -1,29 +1,28 @@
-const d1List = ['oeegm2t4m7ewmnl6'];
+const d1List = ['o7ppjql4ml9mhh5c'];
 const d2List = [
-    '3az2bcjnm7ewn0b9',
-    'gxmx1t3um7ewn7a1',
-    't4cjjnulm7ewndgp',
+    '373dbcceml9mhqmp',
+    'pg3opey7ml9mhw05',
+    '3op4bs4iml9mi2ea',
 ];
 const d3List = [
-    '8n9ldjzvm7ewnn2k',
-    'chn3s6m9m7ewo27e',
-    'tnnth06vm7ewo9mf',
-    'u21iy02fm7ewogf9',
-    'pxb07xrsm6jhbxhw',
-    'ey1q5b3xm7ewoor4',
-    '4xazcv5ym7ewouqh',
+    'rue7t54mml9mi9s8',
+    'p0gx6gkbml9mifya',
+    '7f1y6pmzml9milq5',
+    'u65ai1z4ml9mirfb',
+    'b57dtpmtml9miwsy',
+    'hzqyob52ml9mj2di',
+    'fcwlgxjwml9mj929',
 ];
 const d4List = [
-    'foela164m7ewp2wy',
-    'k12b2q0dm7ewqm9h',
-    'yxyc2mt9m7ewpa48',
-    'c3kzuqjjm7ewpgi1',
-    'l506xzfwm7ewpnx0',
-    'xg7ifok1m7ewpupx',
-    'ilhqvb49m7ewq4kl',
-    'g5259ebum7ewqatw',
-    '9u31mbr5m7ewqgon',
-    'ozgq19tsm7ewqsf1',
+    'rqanc5viml9mjdzx',
+    'oa8rueelml9mjjqb',
+    'zhvack1cml9mjp7f',
+    'islofbagml9mjy59',
+    'cq68tm7zml9mk3ts',
+    'krai7tncml9mk8y9',
+    '64rttw7iml9mke55',
+    'd8x91j84ml9mkl4g',
+    'bfsrkzjwml9mkqk1',
 ];
 
 export const leagueIds = [...d1List, ...d2List, ...d3List, ...d4List];
