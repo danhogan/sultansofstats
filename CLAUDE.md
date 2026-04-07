@@ -35,7 +35,7 @@ A GitHub Actions workflow (`.github/workflows/main.yml`) runs `dewIt.js` daily a
 
 ### Scoring system
 
-Teams earn points in 12 roto categories: R, HR, RBI, SB, OBP, OPS, W+QS (WQS), K, K/9 (K9), SV+HLD (SVHLD), ERA, WHP (WHIP). Lower rank = more points; ERA and WHIP are sorted ascending (lower is better). Both overall (cross-all-divisions) and division-specific point values are calculated and stored in the JSON.
+Teams earn points in 12 roto categories: R, HR, RBI, SB, OBP, SLG, W+QS (WQS), K, K/9 (K9), SV+HLD (SVHLD), ERA, WHP (WHIP). Lower rank = more points; ERA and WHIP are sorted ascending (lower is better). Both overall (cross-all-divisions) and division-specific point values are calculated and stored in the JSON.
 
 ### Frontend routes
 

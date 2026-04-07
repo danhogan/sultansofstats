@@ -30,14 +30,19 @@ export const categories = [
         fantraxCellId: 11
     },
     {
-        dataName: 'WQS',
-        displayName: 'W+QS',
-        fantraxCellId: 18
+        dataName: 'ERA',
+        displayName: 'ERA',
+        fantraxCellId: 13
+    },
+    {
+        dataName: 'WHP',
+        displayName: 'WHIP',
+        fantraxCellId: 14
     },
     {
         dataName: 'K',
         displayName: 'K',
-        fantraxCellId: 13
+        fantraxCellId: 15
     },
     {
         dataName: 'K9',
@@ -50,13 +55,8 @@ export const categories = [
         fantraxCellId: 17
     },
     {
-        dataName: 'ERA',
-        displayName: 'ERA',
-        fantraxCellId: 14
-    },
-    {
-        dataName: 'WHP',
-        displayName: 'WHIP',
-        fantraxCellId: 15
+        dataName: 'WQS',
+        displayName: 'W+QS',
+        fantraxCellId: 18
     }
 ];

@@ -20,12 +20,12 @@
 			SB: row.stats.SB,
 			OBP: row.stats.OBP,
 			SLG: row.stats.SLG,
-			WQS: row.stats.WQS,
+			ERA: row.stats.ERA,
+			WHP: row.stats.WHP,
 			K: row.stats.K,
 			K9: row.stats.K9,
 			SVHLD: row.stats.SVHLD,
-			ERA: row.stats.ERA,
-			WHP: row.stats.WHP,
+			WQS: row.stats.WQS,
 
 			RRank: row.statValues.R,
 			HRRank: row.statValues.HR,
@@ -33,12 +33,12 @@
 			SBRank: row.statValues.SB,
 			OBPRank: row.statValues.OBP,
 			SLGRank: row.statValues.SLG,
-			WQSRank: row.statValues.WQS,
+			ERARank: row.statValues.ERA,
+			WHPRank: row.statValues.WHP,
 			KRank: row.statValues.K,
 			K9Rank: row.statValues.K9,
 			SVHLDRank: row.statValues.SVHLD,
-			ERARank: row.statValues.ERA,
-			WHPRank: row.statValues.WHP,
+			WQSRank: row.statValues.WQS,
 
 			divisionRRank: row.divisionValues.R,
 			divisionHRRank: row.divisionValues.HR,
@@ -46,12 +46,12 @@
 			divisionSBRank: row.divisionValues.SB,
 			divisionOBPRank: row.divisionValues.OBP,
 			divisionSLGRank: row.divisionValues.SLG,
-			divisionWQSRank: row.divisionValues.WQS,
+			divisionERARank: row.divisionValues.ERA,
+			divisionWHPRank: row.divisionValues.WHP,
 			divisionKRank: row.divisionValues.K,
 			divisionK9Rank: row.divisionValues.K9,
 			divisionSVHLDRank: row.divisionValues.SVHLD,
-			divisionERARank: row.divisionValues.ERA,
-			divisionWHPRank: row.divisionValues.WHP,
+			divisionWQSRank: row.divisionValues.WQS,
 		})),
 	);
 
@@ -89,12 +89,12 @@
 		{ id: "SB", numeric: true, label: "SB", center: true },
 		{ id: "OBP", numeric: true, label: "OBP", center: true },
 		{ id: "SLG", numeric: true, label: "SLG", center: true },
-		{ id: "WQS", numeric: true, label: "W+QS", center: true },
+		{ id: "ERA", numeric: true, label: "ERA", center: true },
+		{ id: "WHP", numeric: true, label: "WHIP", center: true },
 		{ id: "K", numeric: true, label: "K", center: true },
 		{ id: "K9", numeric: true, label: "K/9", center: true },
 		{ id: "SVHLD", numeric: true, label: "SVH", center: true },
-		{ id: "ERA", numeric: true, label: "ERA", center: true },
-		{ id: "WHP", numeric: true, label: "WHIP", center: true },
+		{ id: "WQS", numeric: true, label: "W+QS", center: true },
 	]);
 
 	const sortedRows = $derived(
@@ -324,12 +324,22 @@
 					<td class="stat-cell"
 						><span
 							class="chip chip-sm {getColor(
-								overallBool ? row.WQSRank : row.divisionWQSRank,
+								overallBool ? row.ERARank : row.divisionERARank,
 							)}"
 							>{overallBool
-								? row.WQSRank
-								: row.divisionWQSRank}</span
-						><span class="stat-val">{row.WQS}</span></td
+								? row.ERARank
+								: row.divisionERARank}</span
+						><span class="stat-val">{row.ERA.toFixed(2)}</span></td
+					>
+					<td class="stat-cell"
+						><span
+							class="chip chip-sm {getColor(
+								overallBool ? row.WHPRank : row.divisionWHPRank,
+							)}"
+							>{overallBool
+								? row.WHPRank
+								: row.divisionWHPRank}</span
+						><span class="stat-val">{row.WHP.toFixed(3)}</span></td
 					>
 					<td class="stat-cell"
 						><span
@@ -364,22 +374,12 @@
 					<td class="stat-cell"
 						><span
 							class="chip chip-sm {getColor(
-								overallBool ? row.ERARank : row.divisionERARank,
+								overallBool ? row.WQSRank : row.divisionWQSRank,
 							)}"
 							>{overallBool
-								? row.ERARank
-								: row.divisionERARank}</span
-						><span class="stat-val">{row.ERA.toFixed(2)}</span></td
-					>
-					<td class="stat-cell"
-						><span
-							class="chip chip-sm {getColor(
-								overallBool ? row.WHPRank : row.divisionWHPRank,
-							)}"
-							>{overallBool
-								? row.WHPRank
-								: row.divisionWHPRank}</span
-						><span class="stat-val">{row.WHP.toFixed(3)}</span></td
+								? row.WQSRank
+								: row.divisionWQSRank}</span
+						><span class="stat-val">{row.WQS}</span></td
 					>
 				</tr>
 			{/each}
