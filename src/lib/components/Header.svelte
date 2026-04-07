@@ -1,16 +1,20 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from "$app/stores";
 
 	let menuOpen = $state(false);
 
 	const navLinks = [
-		{ label: 'Home', href: '/' },
-		{ label: 'Leaderboard', href: '/leaderboard' },
-		{ label: 'Charts', href: '/charts' },
+		{ label: "Home", href: "/" },
+		{ label: "Leaderboard", href: "/leaderboard" },
+		// { label: "Charts", href: "/charts" },
 	];
 
-	function toggleMenu() { menuOpen = !menuOpen; }
-	function closeMenu() { menuOpen = false; }
+	function toggleMenu() {
+		menuOpen = !menuOpen;
+	}
+	function closeMenu() {
+		menuOpen = false;
+	}
 </script>
 
 <header>
@@ -24,11 +28,17 @@
 				<a
 					href={link.href}
 					class:active={$page.url.pathname === link.href}
-				>{link.label}</a>
+					>{link.label}</a
+				>
 			{/each}
 		</nav>
 
-		<button class="hamburger" onclick={toggleMenu} aria-label="Toggle menu" aria-expanded={menuOpen}>
+		<button
+			class="hamburger"
+			onclick={toggleMenu}
+			aria-label="Toggle menu"
+			aria-expanded={menuOpen}
+		>
 			<span></span>
 			<span></span>
 			<span></span>
@@ -41,8 +51,8 @@
 				<a
 					href={link.href}
 					class:active={$page.url.pathname === link.href}
-					onclick={closeMenu}
-				>{link.label}</a>
+					onclick={closeMenu}>{link.label}</a
+				>
 			{/each}
 		</nav>
 	{/if}
@@ -76,7 +86,7 @@
 	}
 
 	.logo-text {
-		font-family: 'Dela Gothic One', sans-serif;
+		font-family: "Dela Gothic One", sans-serif;
 		font-size: 1rem;
 		font-weight: normal;
 		white-space: nowrap;
@@ -89,8 +99,12 @@
 	}
 
 	@keyframes logo-sweep {
-		from { background-position: 0% center; }
-		to   { background-position: 200% center; }
+		from {
+			background-position: 0% center;
+		}
+		to {
+			background-position: 200% center;
+		}
 	}
 
 	/* ── Desktop nav ──────────────────────────── */
@@ -108,7 +122,9 @@
 		font-weight: 500;
 		padding: 0.3em 0.75em;
 		border-bottom: 1.5px solid transparent;
-		transition: color 0.15s ease, border-color 0.15s ease;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
 	}
 
 	.desktop-nav a:hover,
@@ -132,7 +148,9 @@
 		transition: color 0.15s;
 	}
 
-	.hamburger:hover { color: #fff; }
+	.hamburger:hover {
+		color: #fff;
+	}
 
 	.hamburger span {
 		display: block;
@@ -167,7 +185,11 @@
 	/* ── Responsive ───────────────────────────── */
 
 	@media (max-width: 640px) {
-		.desktop-nav { display: none; }
-		.hamburger { display: flex; }
+		.desktop-nav {
+			display: none;
+		}
+		.hamburger {
+			display: flex;
+		}
 	}
 </style>
