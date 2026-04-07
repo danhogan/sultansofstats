@@ -17,7 +17,7 @@ const DIVISION_CONFIG = {
     1: { relegationLeagueRank: 7 },
     2: { promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 3 },
     3: { superDivisionRank: 1, promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 4 },
-    4: { superDivisionRank: 2, promotionLeagueRank: 2, crossDivSlots: 15 },
+    4: { superDivisionRank: 2, promotionLeagueRank: 3, crossDivSlots: 8 },
 };
 
 const DIVISION_IDS = Object.keys(DIVISION_CONFIG).map(Number);
