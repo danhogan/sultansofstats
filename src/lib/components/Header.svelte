@@ -4,10 +4,11 @@
 	let menuOpen = $state(false);
 
 	const navLinks = [
-		{ label: 'Home', href: '/' },
-		{ label: 'Leaderboard', href: '/leaderboard' },
-		{ label: 'Charts', href: '/charts' },
-	];
+    { label: 'Home', href: '/' },
+    { label: 'Leaderboard', href: '/leaderboard' },
+    { label: 'Charts', href: '/charts' },
+    { label: 'History', href: '/history' },
+];
 
 	function toggleMenu() { menuOpen = !menuOpen; }
 	function closeMenu() { menuOpen = false; }
