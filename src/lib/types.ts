@@ -15,7 +15,7 @@ export interface Data {
 	RBI: number;
 	SB: number;
 	OBP: number;
-	OPS: number;
+	SLG: number;
 	WQS: number;
 	K: number;
 	K9: number;
@@ -28,7 +28,7 @@ export interface Data {
 	RBIRank: number;
 	SBRank: number;
 	OBPRank: number;
-	OPSRank: number;
+	SLGRank: number;
 	WQSRank: number;
 	KRank: number;
 	K9Rank: number;
@@ -41,7 +41,7 @@ export interface Data {
 	divisionRBIRank: number;
 	divisionSBRank: number;
 	divisionOBPRank: number;
-	divisionOPSRank: number;
+	divisionSLGRank: number;
 	divisionWQSRank: number;
 	divisionKRank: number;
 	divisionK9Rank: number;

@@ -25,8 +25,8 @@ export const categories = [
         fantraxCellId: 10
     },
     {
-        dataName: 'OPS',
-        displayName: 'OPS',
+        dataName: 'SLG',
+        displayName: 'SLG',
         fantraxCellId: 11
     },
     {

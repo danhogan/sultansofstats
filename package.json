@@ -20,7 +20,8 @@
     "vite": "^6.0.7"
   },
   "dependencies": {
-    "apexcharts": "^4.3.0"
+    "apexcharts": "^4.3.0",
+    "node-fetch": "^3.3.2"
   },
   "type": "module"
 }
