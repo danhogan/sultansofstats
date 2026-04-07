@@ -1,6 +1,8 @@
 <script lang="ts">
-	import jsonData2022 from "$lib/data/allTheData-2022.json";
-	import jsonData2023 from "$lib/data/allTheData-2023.json";
+// 2022 and 2023 use a different scoring system (separate SV/HD, no K9)
+// and will cause the leaderboard to crash. Needs separate handling before re-enabling.
+//	import jsonData2022 from "$lib/data/allTheData-2022.json";
+//	import jsonData2023 from "$lib/data/allTheData-2023.json";
 	import jsonData2024 from "$lib/data/allTheData-2024.json";
 	import jsonData2025 from "$lib/data/allTheData-2025.json";
 	import jsonDataCurrent from "$lib/data/allTheData.json";
@@ -11,8 +13,8 @@
 		"2026": jsonDataCurrent,
 		"2025": jsonData2025,
 		"2024": jsonData2024,
-		"2023": jsonData2023,
-		"2022": jsonData2022,
+//		"2023": jsonData2023,
+//		"2022": jsonData2022,
 	};
 
 	let selectedYear = $state("2026");
