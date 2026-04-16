@@ -21,9 +21,11 @@
 	let activeJson = $derived(yearMap[selectedYear]);
 	let allData = $state<any[]>(jsonDataCurrent.theData);
 	let statValueLocation = $state("statValues");
+	let selectedDivision = $state(0);
 	let slgStat = $derived(selectedYear === "2026" ? "SLG" : "OPS"); //trying to get slg to switch to ops when selecting a different year to display on the leaderboard
 
 	$effect(() => {
+		selectedDivision = 0;
 		allData = activeJson.theData;
 		statValueLocation = "statValues";
 	});
@@ -34,6 +36,8 @@
 	}
 
 	function handleFilter(division: number) {
+		selectedDivision = division;
+
 		if (division === 0) {
 			allData = activeJson.theData;
 			statValueLocation = "statValues";
@@ -53,7 +57,7 @@
 <div class="board-container">
 	<div class="controls">
 		<div class="controls-left">
-			<Toggle onfilter={handleFilter} />
+			<Toggle selected={selectedDivision} onfilter={handleFilter} />
 			<select bind:value={selectedYear} class="year-select">
 				{#each Object.keys(yearMap).reverse() as year}
 					<option value={year}>{year}</option>
