@@ -4,7 +4,7 @@
 	let {
 		data,
 		statValueLocation,
-		slgStat = "OPS",
+		slgStat = "SLG",
 	}: { data: any[]; statValueLocation: string; slgStat: string } = $props();
 
 	let order = $state<Order>("asc");
@@ -20,7 +20,7 @@
 			RBI: row.stats.RBI,
 			SB: row.stats.SB,
 			OBP: row.stats.OBP,
-			OPS: row.stats[slgStat ?? "SLG"], //attempting to get SLG to swap to OPS where applicable
+			SLG: row.stats[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
 			ERA: row.stats.ERA,
 			WHP: row.stats.WHP,
 			K: row.stats.K,
@@ -33,7 +33,7 @@
 			RBIRank: row.statValues.RBI,
 			SBRank: row.statValues.SB,
 			OBPRank: row.statValues.OBP,
-			OPSRank: row.statValues[slgStat ?? "SLG"], //attempting to get SLG to swap to OPS where applicable
+			SLGRank: row.statValues[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
 			ERARank: row.statValues.ERA,
 			WHPRank: row.statValues.WHP,
 			KRank: row.statValues.K,
@@ -46,7 +46,7 @@
 			divisionRBIRank: row.divisionValues.RBI,
 			divisionSBRank: row.divisionValues.SB,
 			divisionOBPRank: row.divisionValues.OBP,
-			divisionOPSRank: row.divisionValues[slgStat ?? "SLG"], //attempting to get SLG to swap to OPS where applicable
+			divisionSLGRank: row.divisionValues[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
 			divisionERARank: row.divisionValues.ERA,
 			divisionWHPRank: row.divisionValues.WHP,
 			divisionKRank: row.divisionValues.K,
@@ -89,7 +89,7 @@
 		{ id: "RBI", numeric: true, label: "RBI", center: true },
 		{ id: "SB", numeric: true, label: "SB", center: true },
 		{ id: "OBP", numeric: true, label: "OBP", center: true },
-		{ id: "OPS", numeric: true, label: slgStat, center: true },
+		{ id: "SLG", numeric: true, label: slgStat, center: true },
 		{ id: "ERA", numeric: true, label: "ERA", center: true },
 		{ id: "WHP", numeric: true, label: "WHIP", center: true },
 		{ id: "K", numeric: true, label: "K", center: true },
@@ -317,13 +317,13 @@
 					<td class="stat-cell"
 						><span
 							class="chip chip-sm {getColor(
-								overallBool ? row.OPSRank : row.divisionOPSRank,
+								overallBool ? row.SLGRank : row.divisionSLGRank,
 							)}"
 							>{overallBool
-								? row.OPSRank
-								: row.divisionOPSRank}</span
+								? row.SLGRank
+								: row.divisionSLGRank}</span
 						><span class="stat-val"
-							>{(row.OPS ?? 0).toFixed(3)}</span
+							>{(row.SLG ?? 0).toFixed(3)}</span
 						></td
 					>
 					<td class="stat-cell"
