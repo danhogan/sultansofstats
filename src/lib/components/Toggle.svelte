@@ -1,7 +1,8 @@
 <script lang="ts">
-	let { onfilter }: { onfilter: (division: number) => void } = $props();
-
-	let selected = $state(0);
+	let {
+		selected = 0,
+		onfilter,
+	}: { selected: number; onfilter: (division: number) => void } = $props();
 
 	const options = [
 		{ value: 0, label: 'All', color: '#ed4b25' },
@@ -12,7 +13,6 @@
 	];
 
 	function select(value: number) {
-		selected = value;
 		onfilter(value);
 	}
 </script>

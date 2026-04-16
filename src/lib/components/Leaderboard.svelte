@@ -4,7 +4,8 @@
 	let {
 		data,
 		statValueLocation,
-	}: { data: any[]; statValueLocation: string } = $props();
+		slgStat = "SLG",
+	}: { data: any[]; statValueLocation: string; slgStat: string } = $props();
 
 	let order = $state<Order>("asc");
 	let orderBy = $state<keyof Data>("overallRank");
@@ -19,7 +20,7 @@
 			RBI: row.stats.RBI,
 			SB: row.stats.SB,
 			OBP: row.stats.OBP,
-			SLG: row.stats.SLG,
+			SLG: row.stats[slgStat],
 			ERA: row.stats.ERA,
 			WHP: row.stats.WHP,
 			K: row.stats.K,
@@ -32,7 +33,7 @@
 			RBIRank: row.statValues.RBI,
 			SBRank: row.statValues.SB,
 			OBPRank: row.statValues.OBP,
-			SLGRank: row.statValues.SLG,
+			SLGRank: row.statValues[slgStat],
 			ERARank: row.statValues.ERA,
 			WHPRank: row.statValues.WHP,
 			KRank: row.statValues.K,
@@ -45,7 +46,7 @@
 			divisionRBIRank: row.divisionValues.RBI,
 			divisionSBRank: row.divisionValues.SB,
 			divisionOBPRank: row.divisionValues.OBP,
-			divisionSLGRank: row.divisionValues.SLG,
+			divisionSLGRank: row.divisionValues[slgStat],
 			divisionERARank: row.divisionValues.ERA,
 			divisionWHPRank: row.divisionValues.WHP,
 			divisionKRank: row.divisionValues.K,
@@ -88,7 +89,7 @@
 		{ id: "RBI", numeric: true, label: "RBI", center: true },
 		{ id: "SB", numeric: true, label: "SB", center: true },
 		{ id: "OBP", numeric: true, label: "OBP", center: true },
-		{ id: "SLG", numeric: true, label: "SLG", center: true },
+		{ id: "SLG", numeric: true, label: slgStat, center: true },
 		{ id: "ERA", numeric: true, label: "ERA", center: true },
 		{ id: "WHP", numeric: true, label: "WHIP", center: true },
 		{ id: "K", numeric: true, label: "K", center: true },
@@ -309,7 +310,9 @@
 							>{overallBool
 								? row.OBPRank
 								: row.divisionOBPRank}</span
-						><span class="stat-val">{row.OBP.toFixed(3)}</span></td
+						><span class="stat-val"
+							>{(row.OBP ?? 0).toFixed(3)}</span
+						></td
 					>
 					<td class="stat-cell"
 						><span
@@ -319,7 +322,9 @@
 							>{overallBool
 								? row.SLGRank
 								: row.divisionSLGRank}</span
-						><span class="stat-val">{row.SLG.toFixed(3)}</span></td
+						><span class="stat-val"
+							>{(row.SLG ?? 0).toFixed(3)}</span
+						></td
 					>
 					<td class="stat-cell"
 						><span
@@ -329,7 +334,9 @@
 							>{overallBool
 								? row.ERARank
 								: row.divisionERARank}</span
-						><span class="stat-val">{row.ERA.toFixed(2)}</span></td
+						><span class="stat-val"
+							>{(row.ERA ?? 0).toFixed(2)}</span
+						></td
 					>
 					<td class="stat-cell"
 						><span
@@ -339,7 +346,9 @@
 							>{overallBool
 								? row.WHPRank
 								: row.divisionWHPRank}</span
-						><span class="stat-val">{row.WHP.toFixed(3)}</span></td
+						><span class="stat-val"
+							>{(row.WHP ?? 0).toFixed(3)}</span
+						></td
 					>
 					<td class="stat-cell"
 						><span
@@ -357,7 +366,8 @@
 							>{overallBool
 								? row.K9Rank
 								: row.divisionK9Rank}</span
-						><span class="stat-val">{row.K9.toFixed(2)}</span></td
+						><span class="stat-val">{(row.K9 ?? 0).toFixed(2)}</span
+						></td
 					>
 					<td class="stat-cell"
 						><span
