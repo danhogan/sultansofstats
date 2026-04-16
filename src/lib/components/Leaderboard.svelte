@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Data, Order, HeadCell } from '$lib/types';
+	import type { Data, Order, HeadCell } from "$lib/types";
 
 	let {
 		data,
@@ -7,8 +7,8 @@
 		slgStat = "OPS",
 	}: { data: any[]; statValueLocation: string; slgStat: string } = $props();
 	
-	let order = $state<Order>('asc');
-	let orderBy = $state<keyof Data>('overallRank');
+	let order = $state<Order>("asc");
+	let orderBy = $state<keyof Data>("overallRank");
 	let selected = $state<string[]>([]);
 	
 	// Flatten nested stats onto each row
@@ -56,37 +56,37 @@
 		}))
 	);
 
-	const overallBool = $derived(statValueLocation === 'statValues');
+	const overallBool = $derived(statValueLocation === "statValues");
 
 	// Reset sort to the appropriate rank column whenever the view switches
 	$effect(() => {
-		orderBy = statValueLocation === 'statValues' ? 'overallRank' : 'divisionRank';
-		order = 'asc';
+		orderBy = statValueLocation === "statValues" ? "overallRank" : "divisionRank";
+		order = "asc";
 	});
 
 	// "2025 D2 - John Libka" → "John Libka"
 	function formatLeagueName(name: string): string {
-		return name.replace(/^\d{4} D\d+ - /, '');
+		return name.replace(/^\d{4} D\d+ - /, "");
 	}
 
 	const headCells = $derived<HeadCell[]>([
-		{ id: 'teamName',   numeric: false, label: 'Team'  },
-		{ id: 'leagueName', numeric: false, label: 'League'},
-		{ id: 'leagueRank', numeric: true,  label: 'Lg'   },
-		{ id: overallBool ? 'overallRank'   : 'divisionRank',   numeric: true, label: 'Rank' },
-		{ id: overallBool ? 'totalPoints'   : 'divisionPoints', numeric: true, label: 'Pts'  },
-		{ id: 'R',     numeric: true, label: 'R',    center: true },
-		{ id: 'HR',    numeric: true, label: 'HR',   center: true },
-		{ id: 'RBI',   numeric: true, label: 'RBI',  center: true },
-		{ id: 'SB',    numeric: true, label: 'SB',   center: true },
-		{ id: 'OBP',   numeric: true, label: 'OBP',  center: true },
-		{ id: 'OPS',   numeric: true, label: slgStat, center: true },
-		{ id: 'WQS',   numeric: true, label: 'W+QS', center: true },
-		{ id: 'K',     numeric: true, label: 'K',    center: true },
-		{ id: 'K9',    numeric: true, label: 'K/9',  center: true },
-		{ id: 'SVHLD', numeric: true, label: 'SVH',  center: true },
-		{ id: 'ERA',   numeric: true, label: 'ERA',  center: true },
-		{ id: 'WHP',   numeric: true, label: 'WHIP', center: true },
+		{ id: "teamName",   numeric: false, label: "Team"  },
+		{ id: "leagueName", numeric: false, label: "League"},
+		{ id: "leagueRank", numeric: true,  label: "Lg"   },
+		{ id: overallBool ? "overallRank"   : "divisionRank",   numeric: true, label: "Rank" },
+		{ id: overallBool ? "totalPoints"   : "divisionPoints", numeric: true, label: "Pts"  },
+		{ id: "R",     numeric: true, label: "R",    center: true },
+		{ id: "HR",    numeric: true, label: "HR",   center: true },
+		{ id: "RBI",   numeric: true, label: "RBI",  center: true },
+		{ id: "SB",    numeric: true, label: "SB",   center: true },
+		{ id: "OBP",   numeric: true, label: "OBP",  center: true },
+		{ id: "OPS",   numeric: true, label: slgStat, center: true },
+		{ id: "WQS",   numeric: true, label: "W+QS", center: true },
+		{ id: "K",     numeric: true, label: "K",    center: true },
+		{ id: "K9",    numeric: true, label: "K/9",  center: true },
+		{ id: "SVHLD", numeric: true, label: "SVH",  center: true },
+		{ id: "ERA",   numeric: true, label: "ERA",  center: true },
+		{ id: "WHP",   numeric: true, label: "WHIP", center: true },
 	]);
 
 	const sortedRows = $derived(rows.slice().sort(getComparator(order, orderBy)));
@@ -98,19 +98,19 @@
 	}
 
 	function getComparator(o: Order, key: keyof Data) {
-		return o === 'desc'
+		return o === "desc"
 			? (a: any, b: any) => descendingComparator(a, b, key)
 			: (a: any, b: any) => -descendingComparator(a, b, key);
 	}
 
 	function handleSort(property: keyof Data) {
-		const rankLike = ['overallRank', 'leagueRank', 'leagueName', 'teamName', 'divisionRank'];
+		const rankLike = ["overallRank", "leagueRank", "leagueName", "teamName", "divisionRank"];
 		if (rankLike.includes(property as string)) {
-			const isAsc = orderBy === property && order === 'asc';
-			order = isAsc ? 'desc' : 'asc';
+			const isAsc = orderBy === property && order === "asc";
+			order = isAsc ? "desc" : "asc";
 		} else {
-			const isDesc = orderBy === property && order === 'desc';
-			order = isDesc ? 'asc' : 'desc';
+			const isDesc = orderBy === property && order === "desc";
+			order = isDesc ? "asc" : "desc";
 		}
 		orderBy = property;
 	}
@@ -128,45 +128,45 @@
 
 	function getColor(rank: number): string {
 		const count = rows.length;
-		if (rank / count < 0.1)  return 'heat-1';
-		if (rank / count < 0.25) return 'heat-2';
-		if (rank / count < 0.4)  return 'heat-3';
-		if (rank / count < 0.55) return 'heat-4';
-		if (rank / count < 0.7)  return 'heat-5';
-		if (rank / count < 0.85) return 'heat-6';
-		return 'heat-7';
+		if (rank / count < 0.1)  return "heat-1";
+		if (rank / count < 0.25) return "heat-2";
+		if (rank / count < 0.4)  return "heat-3";
+		if (rank / count < 0.55) return "heat-4";
+		if (rank / count < 0.7)  return "heat-5";
+		if (rank / count < 0.85) return "heat-6";
+		return "heat-7";
 	}
 
 	function getPromoIndicator(promo: string): string {
 		switch (promo) {
-			case 'super':      return '↑↑';
-			case 'promotion':  return '↑';
-			case 'relegation': return '↓';
-			default:           return '';
+			case "super":      return "↑↑";
+			case "promotion":  return "↑";
+			case "relegation": return "↓";
+			default:           return "";
 		}
 	}
 
 	function getPromoTitle(promo: string): string {
 		switch (promo) {
-			case 'super':      return 'Double promotion';
-			case 'promotion':  return 'Promotion';
-			case 'relegation': return 'Relegation';
-			default:           return '';
+			case "super":      return "Double promotion";
+			case "promotion":  return "Promotion";
+			case "relegation": return "Relegation";
+			default:           return "";
 		}
 	}
 
 	function getDivisionColor(division: number): string {
 		switch (division) {
-			case 1: return '#eab308';
-			case 2: return '#a78bfa';
-			case 3: return '#38bdf8';
-			default: return '#9ca3af';
+			case 1: return "#eab308";
+			case 2: return "#a78bfa";
+			case 3: return "#38bdf8";
+			default: return "#9ca3af";
 		}
 	}
 
 	function sortIndicator(cell: HeadCell): string {
-		if (orderBy !== cell.id) return '';
-		return order === 'asc' ? ' ↑' : ' ↓';
+		if (orderBy !== cell.id) return "";
+		return order === "asc" ? " ↑" : " ↓";
 	}
 </script>
 
