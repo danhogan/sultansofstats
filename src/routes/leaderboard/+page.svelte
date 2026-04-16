@@ -69,8 +69,7 @@
 		</div>
 		<span class="updated">Last Updated: {formattedDate()}</span>
 	</div>
-	<LeaderboardComponent data={allData} {statValueLocation} {slgStat} /> // attempting
-	to get SLG to switch to OPS when selecting an older season on the leaderboard.
+	<LeaderboardComponent data={allData} {statValueLocation} {slgStat} />
 </div>
 
 <style>

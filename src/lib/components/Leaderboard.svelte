@@ -20,7 +20,7 @@
 			RBI: row.stats.RBI,
 			SB: row.stats.SB,
 			OBP: row.stats.OBP,
-			SLG: row.stats[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
+			SLG: row.stats[slgStat],
 			ERA: row.stats.ERA,
 			WHP: row.stats.WHP,
 			K: row.stats.K,
@@ -33,7 +33,7 @@
 			RBIRank: row.statValues.RBI,
 			SBRank: row.statValues.SB,
 			OBPRank: row.statValues.OBP,
-			SLGRank: row.statValues[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
+			SLGRank: row.statValues[slgStat],
 			ERARank: row.statValues.ERA,
 			WHPRank: row.statValues.WHP,
 			KRank: row.statValues.K,
@@ -46,7 +46,7 @@
 			divisionRBIRank: row.divisionValues.RBI,
 			divisionSBRank: row.divisionValues.SB,
 			divisionOBPRank: row.divisionValues.OBP,
-			divisionSLGRank: row.divisionValues[slgStat ?? "OPS"], //attempting to get SLG to swap to OPS where applicable
+			divisionSLGRank: row.divisionValues[slgStat],
 			divisionERARank: row.divisionValues.ERA,
 			divisionWHPRank: row.divisionValues.WHP,
 			divisionKRank: row.divisionValues.K,
