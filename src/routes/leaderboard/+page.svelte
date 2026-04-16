@@ -57,12 +57,14 @@
 <div class="board-container">
 	<div class="controls">
 		<div class="controls-left">
+			<span class="year-select-wrap">
+				<select bind:value={selectedYear} class="year-select">
+					{#each Object.keys(yearMap).reverse() as year}
+						<option value={year}>{year}</option>
+					{/each}
+				</select>
+			</span>
 			<Toggle selected={selectedDivision} onfilter={handleFilter} />
-			<select bind:value={selectedYear} class="year-select">
-				{#each Object.keys(yearMap).reverse() as year}
-					<option value={year}>{year}</option>
-				{/each}
-			</select>
 			<div class="promo-legend">
 				<span><span class="arr">↑↑</span> Double promotion</span>
 				<span class="sep">·</span>
@@ -95,7 +97,9 @@
 
 	.updated {
 		color: var(--text-secondary);
-		font-size: 0.8rem;
+		font-size: 0.72rem;
+		opacity: 0.65;
+		margin-left: auto;
 	}
 
 	.promo-legend {
@@ -116,21 +120,48 @@
 		vertical-align: 0.2em;
 	}
 
+	.year-select-wrap {
+		position: relative;
+		display: inline-flex;
+	}
+
+	.year-select-wrap::after {
+		content: "▾";
+		position: absolute;
+		right: 11px;
+		top: 50%;
+		transform: translateY(-52%);
+		color: var(--text-secondary);
+		font-size: 0.7rem;
+		pointer-events: none;
+	}
+
 	.year-select {
-		background: var(--bg-card);
-		color: var(--text-primary);
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		border-radius: 6px;
-		padding: 4px 8px;
-		font-size: 0.85rem;
+		appearance: none;
+		background: none;
+		color: var(--text-secondary);
+		border: 1.5px solid
+			color-mix(in srgb, var(--color-primary) 38%, transparent);
+		border-radius: 999px;
+		min-width: 80px;
+		padding: 5px 30px 5px 14px;
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 		cursor: pointer;
 	}
 
+	.year-select:hover {
+		background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+		border-color: color-mix(in srgb, var(--color-primary) 65%, transparent);
+		color: #fff;
+	}
+
 	.year-select option {
-		background: #1a1a2e;
-		color: #ffffff;
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		border-radius: 6px;
+		background: var(--bg-card);
+		color: var(--text-primary);
+		border: none;
 		padding: 4px 8px;
 		font-size: 0.85rem;
 		cursor: pointer;
@@ -138,6 +169,7 @@
 
 	.year-select:focus {
 		outline: none;
-		border-color: var(--color-primary);
+		background: var(--bg-card);
+		border-color: color-mix(in srgb, var(--color-primary) 50%, transparent);
 	}
 </style>
