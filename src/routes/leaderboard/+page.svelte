@@ -138,7 +138,7 @@
 
 	.year-select {
 		appearance: none;
-		background: none;
+		background: var(--bg-paper);
 		color: var(--text-secondary);
 		border: 1.5px solid
 			color-mix(in srgb, var(--color-primary) 38%, transparent);
@@ -159,7 +159,7 @@
 	}
 
 	.year-select option {
-		background: var(--bg-card);
+		background: var(--bg-paper);
 		color: var(--text-primary);
 		border: none;
 		padding: 4px 8px;
@@ -169,7 +169,7 @@
 
 	.year-select:focus {
 		outline: none;
-		background: var(--bg-card);
+		background: var(--bg-paper);
 		border-color: color-mix(in srgb, var(--color-primary) 50%, transparent);
 	}
 </style>
