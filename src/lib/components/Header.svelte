@@ -7,6 +7,7 @@
 		{ label: "Home", href: "/" },
 		{ label: "Leaderboard", href: "/leaderboard" },
 		// { label: "Charts", href: "/charts" },
+		{ label: "History", href: "/history" },
 	];
 
 	function toggleMenu() {
