@@ -2,7 +2,7 @@ export const categories = [
     {
         dataName: 'R',
         displayName: 'R',
-        fantraxCellId: 6
+        fantraxCellId: 5 // Was 6, but fantrax has hits in 6, this should fix the leaderboard.
     },
     {
         dataName: 'HR',
