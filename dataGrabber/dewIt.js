@@ -17,7 +17,7 @@ const DIVISION_CONFIG = {
     1: { relegationLeagueRank: 7 },
     2: { promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 3 },
     3: { superDivisionRank: 1, promotionLeagueRank: 2, relegationLeagueRank: 8, crossDivSlots: 4 },
-    4: { superDivisionRank: 2, promotionLeagueRank: 3, crossDivSlots: 8 },
+    4: { superDivisionRank: 2, promotionLeagueRank: 2, crossDivSlots: 15 },
 };
 
 const DIVISION_IDS = Object.keys(DIVISION_CONFIG).map(Number);
@@ -191,16 +191,45 @@ function addPromotion(teams) {
 }
 
 // --- Main ---
+// Modified by IAmABulldozer: Added statsHistory accumulation.
+// Each daily run now reads the existing allTheData.json to preserve
+// each team's historical stat values, appends today's stats, and
+// writes it all back. This feeds the charts feature on /charts.
+// --- Main ---
 
 try {
+    // Read existing data to preserve statsHistory
+    let existingHistory = {};
+    try {
+        const existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf8'));
+        for (const team of existing.theData) {
+            existingHistory[team.teamId] = team.statsHistory || {};
+        }
+    } catch {
+        // No existing file yet, start fresh
+    }
+
     const leagueResponses = await Promise.all(leagueIds.map(fetchLeagueStandings));
     const teams = leagueResponses.flatMap(parseLeagueTeams);
     const withPoints = addStatPoints(teams);
     const withRankings = addRankings(withPoints);
     const withPromotion = addPromotion(withRankings);
 
+    // Append today's stats to each team's history
+    // History shape: { R: [{date, value}, ...], HR: [...], ... }
+    // Append today's stats to each team's history
+    const today = new Date().toISOString().split('T')[0];
+    const withHistory = withPromotion.map((team) => {
+        const history = existingHistory[team.teamId] || {};
+        for (const cat of categories) {
+            if (!history[cat.dataName]) history[cat.dataName] = [];
+            history[cat.dataName].push({ date: today, value: team.stats[cat.dataName] });
+        }
+        return { ...team, statsHistory: history };
+    });
+
     fs.writeFileSync(OUTPUT_PATH, JSON.stringify({
-        theData: withPromotion,
+        theData: withHistory,
         updateDate: Date.now(),
     }));
 
